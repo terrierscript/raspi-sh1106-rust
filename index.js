@@ -14,6 +14,7 @@ const getDate = () => {
 }
 
 const device = new SH1106()
+console.log("start")
 setInterval(() => {
   console.log("interval")
   // Clear the canvas
