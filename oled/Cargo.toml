@@ -8,3 +8,7 @@ edition = "2018"
 
 [dependencies]
 sh1106 = "0.2.0"
+cortex-m = "0.6.1"
+cortex-m-rt = "0.6.10"
+panic-semihosting = "0.5.3"
+stm32f1xx-hal = "0.4.0"
