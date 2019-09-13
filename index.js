@@ -1,3 +1,4 @@
+console.log("start")
 const { SH1106 } = require("sh1106")
 
 const pad = (input) => {
@@ -13,8 +14,8 @@ const getDate = () => {
 }
 
 const device = new SH1106()
-
 setInterval(() => {
+  console.log("interval")
   // Clear the canvas
   device.canvas.clear()
 
