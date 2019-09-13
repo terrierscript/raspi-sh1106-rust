@@ -20,7 +20,7 @@ setInterval(() => {
   device.canvas.clear()
 
   // Draw the current time at [1, 1] with a size of 2
-  device.canvas.text(1, 1, getDate(), 2)
+  device.canvas.text(1, 1, "aaa", 1)
 
   // Update the display
   device.refresh()
