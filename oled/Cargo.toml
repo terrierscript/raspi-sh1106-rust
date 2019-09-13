@@ -11,7 +11,21 @@ sh1106 = "0.2.0"
 cortex-m = "0.6.1"
 cortex-m-rt = "0.6.10"
 panic-semihosting = "0.5.3"
-stm32f1xx-hal = "0.4.0"
 
 [target.armv7-unknown-linux-gnueabihf]
 linker = "arm-linux-gnueabihf-gcc-4.7"
+
+[dependencies.embedded-hal]
+version = "0.2.3"
+
+[dependencies.stm32f1xx-hal]
+version = "0.4.0"
+features = ["stm32f103", "rt"]
+
+[features]
+default = ["graphics"]
+graphics = ["embedded-graphics"]
+
+[dependencies.embedded-graphics]
+version = "0.6.0-alpha.2"
+optional = true
