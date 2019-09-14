@@ -15,14 +15,18 @@ const getDate = () => {
 
 const device = new SH1106()
 console.log("xx")
+let counter = 0
 setInterval(() => {
-  console.log("interval")
+  let contrast = counter
+  console.log("interval", contrast)
   // Clear the canvas
   device.canvas.clear()
 
   // Draw the current time at [1, 1] with a size of 2
-  device.canvas.text(1, 1, "aaa", 1)
+  device.canvas.text(10, 10, contrast.toString(), 3)
 
   // Update the display
+  device.contrast(contrast)
+  counter += 10
   device.refresh()
 }, 1000)
