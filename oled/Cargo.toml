@@ -11,12 +11,7 @@ sh1106 = "0.2.0"
 cortex-m = "0.6.1"
 cortex-m-rt = "0.6.10"
 panic-semihosting = "0.5.3"
-
-[target.arm-unknown-linux-gnueabihf]
-linker = "arm-linux-gnueabihf-gcc"
-rustflags = [
-  "-C", "link-arg=-march=armv6",
-]
+rppal = { version = "0.11.3", features = ["hal"], optional=true }
 
 [dependencies.embedded-hal]
 version = "0.2.3"
@@ -25,10 +20,21 @@ version = "0.2.3"
 version = "0.4.0"
 features = ["stm32f103", "rt"]
 
+[dependencies.embedded-graphics]
+version = "0.6.0-alpha.2"
+optional = true
+
 [features]
 default = ["graphics"]
 graphics = ["embedded-graphics"]
 
-[dependencies.embedded-graphics]
-version = "0.6.0-alpha.2"
-optional = true
+[profile.dev]
+codegen-units = 1
+incremental = false
+panic = "abort"
+
+[profile.release]
+codegen-units = 1
+debug = true
+lto = true
+panic = "abort"
