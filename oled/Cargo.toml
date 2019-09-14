@@ -12,8 +12,11 @@ cortex-m = "0.6.1"
 cortex-m-rt = "0.6.10"
 panic-semihosting = "0.5.3"
 
-[target.armv7-unknown-linux-gnueabihf]
-linker = "arm-linux-gnueabihf-gcc-4.7"
+[target.arm-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
+rustflags = [
+  "-C", "link-arg=-march=armv6",
+]
 
 [dependencies.embedded-hal]
 version = "0.2.3"
