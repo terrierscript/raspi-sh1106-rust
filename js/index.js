@@ -1,5 +1,6 @@
 console.log("start")
 const { SH1106 } = require("sh1106")
+const bota = require("./bota")
 
 const pad = (input) => {
   return ("0" + input).slice(-2)
@@ -23,7 +24,12 @@ setInterval(() => {
   device.canvas.clear()
 
   // Draw the current time at [1, 1] with a size of 2
-  device.canvas.text(10, 10, contrast.toString(), 3)
+  // device.canvas.text(10, 10, contrast.toString(), 3)
+  bota().map((ys, y) => {
+    ys.map((v, x) => {
+      device.canvas.set(x, y, v)
+    })
+  })
 
   // Update the display
   device.contrast(contrast)
