@@ -1,6 +1,7 @@
 console.log("start")
 const { SH1106 } = require("sh1106")
 const bota = require("./bota")
+const rpio = require("rpio")
 
 const pad = (input) => {
   return ("0" + input).slice(-2)
@@ -19,6 +20,14 @@ console.log("xx")
 let inc = true
 let counter = 0
 let move = 4
+
+
+rpio.open(21, rpio.INPUT, rpio.PULL_UP);
+
+rpio.poll(21, (cbpin) => {
+  console.log("button",cbpin)
+});
+
 setInterval(() => {
   // let contrast = counter
   // console.log("interval", contrast)
