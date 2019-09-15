@@ -18,6 +18,7 @@ const device = new SH1106()
 console.log("xx")
 let inc = true
 let counter = 0
+let move = 4
 setInterval(() => {
   // let contrast = counter
   // console.log("interval", contrast)
@@ -26,7 +27,7 @@ setInterval(() => {
 
   // Draw the current time at [1, 1] with a size of 2
   // device.canvas.text(10, 10, contrast.toString(), 3)
-  bota(counter).map((ys, y) => {
+  bota(counter, 4).map((ys, y) => {
     ys.map((v, x) => {
       device.canvas.set(x, y, v)
     })
@@ -39,8 +40,9 @@ setInterval(() => {
   } else {
     counter -= 1
   }
-  if (counter > 5 || counter < -5) {
+  if (counter > move || counter < -move) {
     inc = !inc
   }
+  console.log(counter)
   device.refresh()
 }, 500)
