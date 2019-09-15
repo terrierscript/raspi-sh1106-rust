@@ -1,13 +1,11 @@
-[build]
-target = "arm-unknown-linux-gnueabi"
 
 [target.arm-unknown-linux-musleabihf]
+linker = "arm-linux-musleabihf-gcc"
 rustflags = [
 ]
 
 [target.arm-unknown-linux-gnueabihf]
 linker = "arm-linux-gnueabihf-gcc"
-
 rustflags = [
   "-C", "link-arg=-march=armv6",
 ]
