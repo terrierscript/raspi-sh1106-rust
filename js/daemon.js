@@ -3,9 +3,9 @@ const os = require("os")
 
 const device = new SH1106()
 
+device.canvas.clear()
 setInterval(() => {
   // Clear the canvas
-  device.canvas.clear()
   const lines = [
     `arch: ${os.arch()}`,
     `cpu: ${os.cpus()[0].times.user}`,
