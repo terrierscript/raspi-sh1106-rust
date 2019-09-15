@@ -22,11 +22,27 @@ let counter = 0
 let move = 4
 
 
-rpio.open(21, rpio.INPUT, rpio.PULL_UP);
+const buttons = [
+  21,
+  20,
+  16,
+  6,
+  19,
+  5,
+  26,
+]
+buttons.map(b => {
+  rpio.open(b, rpio.INPUT, rpio.PULL_UP);
+})
 
-rpio.poll(21, (cbpin) => {
+const cb = (cbpin) => {
   console.log("button",cbpin)
-});
+}
+
+buttons.map(b => {
+  rpio.poll(b, cb)
+})
+
 
 setInterval(() => {
   // let contrast = counter
@@ -44,14 +60,14 @@ setInterval(() => {
 
   // Update the display
   // device.contrast(contrast)
-  if (inc) {
-    counter += 1
-  } else {
-    counter -= 1
-  }
-  if (counter > move || counter < -move) {
-    inc = !inc
-  }
+  // if (inc) {
+  //   counter += 1
+  // } else {
+  //   counter -= 1
+  // }
+  // if (counter > move || counter < -move) {
+  //   inc = !inc
+  // }
   console.log(counter)
   device.refresh()
 }, 500)
