@@ -19,11 +19,11 @@
 #![no_std]
 #![no_main]
 
-extern crate linux_embedded_hal as hal;
+// extern crate linux_embedded_hal as hal;
 // extern crate embedded_graphics;
-extern crate sh1106;
+// extern crate sh1106;
 
-use hal::I2cdev;
+// use hal::I2cdev;
 // use embedded_graphics::prelude::*;
 // use embedded_graphics::primitives::{Line};
 use sh1106::prelude::*;
@@ -31,7 +31,7 @@ use sh1106::Builder;
 
 fn main() {
 
-    let i2c = I2cdev::new("/dev/i2c-1").unwrap();
+    // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
 
     let b = Builder::new();
     // let mut disp: GraphicsMode<
@@ -54,3 +54,8 @@ fn main() {
 // fn HardFault(ef: &ExceptionFrame) -> ! {
 //     panic!("{:#?}", ef);
 // }
+
+#[panic_handler]
+fn my_panic(_info: &core::panic::PanicInfo) -> ! {
+    loop {}
+}

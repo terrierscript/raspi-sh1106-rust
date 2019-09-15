@@ -1,5 +1,5 @@
 [build]
-target = "arm-unknown-linux-musleabihf"
+target = "arm-unknown-linux-gnueabi"
 
 [target.arm-unknown-linux-musleabihf]
 rustflags = [
@@ -7,6 +7,7 @@ rustflags = [
 
 [target.arm-unknown-linux-gnueabihf]
 linker = "arm-linux-gnueabihf-gcc"
+
 rustflags = [
   "-C", "link-arg=-march=armv6",
 ]
