@@ -6,7 +6,7 @@ const device = new SH1106()
 setInterval(() => {
   // Clear the canvas
   device.canvas.clear()
-  const lines = [os.arch(), cpus[0].times.user]
+  const lines = [os.arch(), os.cpus()[0].times.user]
 
   // Draw the current time at [1, 1] with a size of 2
   lines.map(l, (i) => {
