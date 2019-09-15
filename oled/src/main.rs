@@ -25,9 +25,13 @@ extern crate sh1106;
 // use hal::I2cdev;
 use hal::Spidev;
 use hal::Pin;
-
+use hal::Delay;
+use hal::sysfs_gpio::Direction;
+use embedded_hal::digital::v2::OutputPin;
 use embedded_graphics::prelude::*;
-// use embedded_graphics::primitives::{Line};
+use embedded_graphics::primitives::{Line};
+
+use embedded_graphics::pixelcolor::BinaryColor;
 use sh1106::prelude::*;
 use sh1106::Builder;
 
@@ -35,30 +39,57 @@ use sh1106::Builder;
 fn main() {
     println!("start");
     // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
-    let spi = Spidev::open("/dev/spidev0.0").unwrap_or_else(|e| -> {
+    let spi = Spidev::open("/dev/spidev0.0").unwrap_or_else(|e| {
         println!("cannnot open");
         println!("{:?}",e);
+        panic!("not open panic");
     });
-
+    println!("spi connected");
     // let b = Builder::new();
-    let dc = Pin::new(24);
-    let mut disp: GraphicsMode<_> = Builder::new().connect_spi(spi, dc).into();
+    let mut dc = Pin::new(24);
+    dc.export().unwrap();
+    while !dc.is_exported() {}
+    dc.set_high();
+    dc.set_direction(Direction::Out).unwrap();
 
+    let mut reset = Pin::new(25);
+    reset.export().unwrap();
+    while !reset.is_exported() {}
+    reset.set_direction(Direction::Out).unwrap();
+
+    println!("pin");
+    let mut disp: GraphicsMode<_> = Builder::new().connect_spi(spi, dc).into();
+    println!("disp");
+    let mut delay = Delay {};
+
+    disp.reset(&mut reset, &mut delay);
+    
     disp.init().unwrap_or_else(|e| {
         println!("not initialized");
         println!("{:?}", e);
+        // panic!("not initialized");
     });
+    println!("initialized");
     disp.flush().unwrap_or_else(|e| {
         println!("not flush");
         println!("{:?}", e);
+        panic!("not flashed");
     });
-    
-    disp.set_pixel(10, 10, 1);
-    disp.set_pixel(10, 11, 1);
-    disp.set_pixel(10, 12, 1);
+    println!("flashed");
 
+
+    let line = Line::new(Point::new(0, 0), Point::new(64, 64))
+        // .translate(Point::new(128 + PADDING * 2, 0))
+        .stroke_color(Some(BinaryColor::On));
+
+
+    disp.draw(line.into_iter());
+    // disp.set_pixel(10, 10, 1);
+    // disp.set_pixel(10, 11, 1);
+    // disp.set_pixel(10, 12, 1);
+    
+    disp.flush().expect("cannot flushed");
     println!("end");
-    disp.flush().unwrap();
 }
 
 // #[exception]
