@@ -80,7 +80,7 @@ fn main() {
 
     let line = Line::new(Point::new(0, 0), Point::new(64, 64))
         // .translate(Point::new(128 + PADDING * 2, 0))
-        .stroke_color(Some(BinaryColor::On));
+        .stroke(Some(BinaryColor::On));
 
 
     disp.draw(line.into_iter());
