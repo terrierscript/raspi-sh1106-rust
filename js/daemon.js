@@ -3,6 +3,7 @@ const os = require("os")
 
 const device = new SH1106()
 
+console.log("start")
 device.canvas.clear()
 setInterval(() => {
   // Clear the canvas
@@ -19,4 +20,4 @@ setInterval(() => {
 
   // Update the display
   device.refresh()
-}, 1000)
+}, 10000)
