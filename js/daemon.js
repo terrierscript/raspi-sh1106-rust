@@ -10,7 +10,7 @@ setInterval(() => {
 
   // Draw the current time at [1, 1] with a size of 2
   lines.map((l, i) => {
-    device.canvas.text(i * 10, 1, l.toString(), 1)
+    device.canvas.text(1, i * 10, l.toString(), 1)
   })
 
   // Update the display
