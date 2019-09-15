@@ -58,52 +58,7 @@ fn i2c() {
 
 }
 
-// #![main]
-fn spi() {
-    println!("start");
-    // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
-    let spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
-    println!("spi connected");
-    // let b = Builder::new();
-    let mut dc = Pin::new(24);
-    dc.export().expect("dc pin unwrap failed");
-    while !dc.is_exported() {}
-    println!("dc pin");
-    // dc.set_high();
-    dc.set_direction(Direction::Out).expect("dc direction failed");
 
-    let mut reset = Pin::new(25);
-    reset.export().expect("reset pin unwrap failed");
-    while !reset.is_exported() {}
-    println!("reset pin");
-    reset.set_direction(Direction::Out).expect("reset direction failed");
-
-    println!("pin");
-    let mut disp: GraphicsMode<_> = Builder::new().connect_spi(spi, dc).into();
-    println!("disp");
-    let mut delay = Delay {};
-
-    disp.reset(&mut reset, &mut delay);
-    
-    disp.init().expect("not initialized");
-    println!("initialized");
-    disp.flush().expect("not flushed");
-    println!("flashed");
-
-
-    let line = Line::new(Point::new(0, 0), Point::new(64, 64))
-    //     // .translate(Point::new(128 + PADDING * 2, 0))
-        .stroke(Some(BinaryColor::On));
-
-
-    disp.draw(line.into_iter());
-    disp.set_pixel(10, 10, 1);
-    // // disp.set_pixel(10, 11, 1);
-    // // disp.set_pixel(10, 12, 1);
-    
-    disp.flush().expect("cannot flushed");
-    println!("end");
-}
 fn spi2() {
     println!("start");
     // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
@@ -112,8 +67,8 @@ fn spi2() {
     // let b = Builder::new();
     let mut dc = Pin::new(24);
     dc.export().expect("dc pin unwrap failed");
-    while !dc.is_exported() {}
-    println!("dc pin");
+    // while !dc.is_exported() {}
+    // println!("dc pin");
     // dc.set_high();
     dc.set_direction(Direction::Out).expect("dc direction failed");
 
@@ -132,8 +87,10 @@ fn spi2() {
     
     disp.init().expect("not initialized");
     println!("initialized");
+    println!("{:?}", disp.get_dimensions());
     disp.flush().expect("not flushed");
     println!("flashed");
+    // disp.reset().expect("not flushed");
 
 
     // let line = Line::new(Point::new(0, 0), Point::new(64, 64))
@@ -147,7 +104,8 @@ fn spi2() {
     // // disp.set_pixel(10, 11, 1);
     // // disp.set_pixel(10, 12, 1);
     
-    disp.flush().expect("cannot flushed");
+    // disp.flush().expect("cannot flushed");
+    // println!("{:?}", disp.buffer);
     println!("end");
 }
 
