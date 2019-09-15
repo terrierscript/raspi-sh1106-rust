@@ -3,6 +3,10 @@ target = "arm-unknown-linux-musleabihf"
 
 [target.arm-unknown-linux-musleabihf]
 rustflags = [
-  "-C", "linker=rust-lld",
-  "-C", "linker-flavor=ld.lld",
+]
+
+[target.arm-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
+rustflags = [
+  "-C", "link-arg=-march=armv6",
 ]

@@ -29,14 +29,16 @@ use hal::I2cdev;
 use sh1106::prelude::*;
 use sh1106::Builder;
 
-
 fn main() {
 
     let i2c = I2cdev::new("/dev/i2c-1").unwrap();
 
+    let b = Builder::new();
     // let mut disp: GraphicsMode<
-    //     I2cInterface<hal::I2cdev>
-    // > = Builder::new().connect_i2c(i2c).into();
+    //     // I2cInterface<hal::I2cdev>
+    //     _
+    // > = Builder::new()
+    // .connect_i2c(i2c).into();
 
     // disp.init().unwrap();
     // disp.flush().unwrap();
