@@ -7,34 +7,38 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sh1106 = "0.2.0"
-cortex-m = "0.6.1"
-cortex-m-rt = "0.6.10"
+
+# embedded-graphics = "0.1.1"
+# cortex-m = "0.6.1"
+# cortex-m-rt = "0.6.10"
 panic-semihosting = "0.5.3"
-rppal = { version = "0.11.3", features = ["hal"], optional=true }
+# rppal = { version = "0.11.3", features = ["hal"], optional=true }
+rppal = "0.11.3"
+linux-embedded-hal = "0.2.2"
+
+[dependencies.sh1106]
+version = "0.2.0"
+features = ["graphics"]
+# graphics = ["embedded-graphics"]
 
 [dependencies.embedded-hal]
 version = "0.2.3"
 
-[dependencies.stm32f1xx-hal]
-version = "0.4.0"
-features = ["stm32f103", "rt"]
-
 [dependencies.embedded-graphics]
 version = "0.6.0-alpha.2"
-optional = true
+# optional = true
 
-[features]
-default = ["graphics"]
-graphics = ["embedded-graphics"]
+# [features]
+# default = ["graphics"]
+# graphics = ["embedded-graphics"]
 
 [profile.dev]
 codegen-units = 1
 incremental = false
-panic = "abort"
+# panic = "abort"
 
 [profile.release]
 codegen-units = 1
 debug = true
 lto = true
-panic = "abort"
+# panic = "abort"
