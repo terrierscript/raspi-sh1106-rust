@@ -9,3 +9,6 @@ linker = "arm-linux-gnueabihf-gcc"
 rustflags = [
   "-C", "link-arg=-march=armv6",
 ]
+
+[build]
+arm-unknown-linux-musleabihf
