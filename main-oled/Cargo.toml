@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 linux-embedded-hal = {version= "0.2.2"}
 random-pos = { path = "../random-pos"}
+spidev-sh1106 = { path = "../spidev-sh1106"}
 
 
 [dependencies.sh1106]
