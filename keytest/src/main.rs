@@ -15,6 +15,7 @@ use sh1106::Builder;
 //     return 
 // }
 
+
 fn main() -> ! {
     let sd = SpidevSH1106::new();
     let dc = SpidevSH1106::dc_pin();
@@ -26,13 +27,15 @@ fn main() -> ! {
     let  gpio = Gpio::new().expect( "Failed Gpio::new" );
     println!("got gpio");
     
-    let mut b1 : InputPin = gpio.get(21).expect("get 21 pin").into_input_pullup();
-    b1.set_interrupt(Trigger::Both).expect("failed set interrupt");
+    let mut b1 : InputPin = {
+        let p = gpio.get(21).expect("get 21 pin").into_input_pullup();
+        p.set_interrupt(Trigger::Both).expect("failed set interrupt");
+        
+    }
     // b1.poll_interrupt()
     loop {
         // println!("loop");
         let s = b1.poll_interrupt(false, None).expect("v");
-        println!("{:?}", s);
         // println!("{:?}", );
         match s {
             Some(n) => {
