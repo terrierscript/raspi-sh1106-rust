@@ -41,10 +41,10 @@ fn main() {
     disp.flush().unwrap();
     
     disp.set_pixel(10, 10, 1);
-    disp.set_pixel(20, 20, 0);
-    disp.set_pixel(30, 30, 0);
-    disp.draw(Line::new(Coord::new(8, 16 + 16), Coord::new(8 + 16, 16 + 16)).into_iter());
-    // disp.draw(Line::new((8, 16 + 16), (8 + 8, 16), 1).into_iter());
+    disp.set_pixel(20, 20, 1);
+    disp.set_pixel(30, 30, 1);
+    // disp.draw(Line::new(Coord::new(8, 16 + 16), Coord::new(8 + 16, 16 + 16)).into_iter());
+    // disp.draw(Line::new(Coord::new(8, 16 + 16),Coord::new(8 + 8, 16), Style::with_stroke(PixelColor)).into_iter());
     // disp.draw(Line::new((8 + 16, 16 + 16), (8 + 8, 16), 1).into_iter());
 
     // disp.draw(Rect::new((48, 16), (48 + 16, 16 + 16), 1u8).into_iter());
