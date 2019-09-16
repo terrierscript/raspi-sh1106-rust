@@ -21,9 +21,6 @@ buttons.map(b => {
 })
 // rpio.open(20, rpio.INPUT, rpio.PULL_UP);
 
-const cb = (cbpin) => {
-  console.log("button",cbpin)
-}
 
 // buttons.map(b => {
   
@@ -32,11 +29,11 @@ const cb = (cbpin) => {
 setInterval(() => {
   buttons.map(b => {
     const l = rpio.read(b)
-    console.log(b, l)
+    // console.log(b, l)
     if (l === LOW) {
       console.log('Foo', b); // Called when button is pressed
     }
   })
-}, 1000);
+}, 10);
 
 console.log("end")
