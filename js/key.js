@@ -5,7 +5,7 @@ const {LOW} = rpio
 console.log("start")
 const buttons = [
   21,
-  20,
+  // 20,
   16,
   6,
   19,
