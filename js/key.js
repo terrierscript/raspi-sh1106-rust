@@ -27,6 +27,7 @@ const cb = (cbpin) => {
   // rpio.poll(21, cb)
 // })
 setInterval(() => {
+  console.log(rpio.read(21))
   if (rpio.read(21) === LOW) {
     console.log('Foo'); // Called when button is pressed
   }
