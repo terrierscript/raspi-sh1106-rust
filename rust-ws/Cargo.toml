@@ -1,5 +1,15 @@
 [workspace]
 members = [
   "oled",
-  "sandbox"
+  "sandbox",
+  "keytest",
+  "led-4"
 ]
+
+
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"

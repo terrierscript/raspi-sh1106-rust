@@ -59,7 +59,7 @@ fn i2c() {
 }
 
 
-fn spi2() {
+fn spi2() -> ! {
     println!("start");
     // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
     let spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
@@ -107,6 +107,7 @@ fn spi2() {
     // disp.flush().expect("cannot flushed");
     // println!("{:?}", disp.buffer);
     println!("end");
+    loop {}
 }
 
 // #[exception]

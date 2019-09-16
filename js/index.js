@@ -1,7 +1,6 @@
 console.log("start")
 const { SH1106 } = require("sh1106")
 const bota = require("./bota")
-const rpio = require("rpio")
 
 const pad = (input) => {
   return ("0" + input).slice(-2)
@@ -20,28 +19,6 @@ console.log("xx")
 let inc = true
 let counter = 0
 let move = 4
-
-
-const buttons = [
-  21,
-  20,
-  16,
-  6,
-  19,
-  5,
-  26,
-]
-buttons.map(b => {
-  rpio.open(b, rpio.INPUT, rpio.PULL_UP);
-})
-
-const cb = (cbpin) => {
-  console.log("button",cbpin)
-}
-
-buttons.map(b => {
-  rpio.poll(b, cb)
-})
 
 
 setInterval(() => {
