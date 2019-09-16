@@ -60,31 +60,32 @@ fn main() {
     keys.insert(    20, "KEY2_PIN"        );
     keys.insert(    16, "KEY3_PIN"        );
     let gpio = Gpio::new().expect( "Failed Gpio::new" );
-    
-    println!("Hello, world!!!!");
-    let vec : Vec<InputPin> = keys.iter_mut().map(|(pid, _)| {
-        let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
-        p.set_interrupt(Trigger::Both).expect("failed set interrupt");
-        p
-    }).collect();
-    let v2 : Vec<&InputPin> = vec.into_iter().map(|v| &v).collect();
+    'a : {
+        println!("Hello, world!!!!");
+        let vec : Vec<&InputPin> = keys.iter_mut().map(|(pid, _)| {
+            let mut p : &'a InputPin = gpio.get(*pid).expect("get pin").into_input_pullup();
+            p.set_interrupt(Trigger::Both).expect("failed set interrupt");
+            &p
+        }).collect();
+        // let v2 : Vec<&InputPin> = vec.into_iter().map(|v| &v).collect();
 
-    let pins = v2.as_slice();
+        let pins = vec.as_slice();
 
-    loop {
-        // println!("loop");
-        let s = gpio.poll_interrupts(pins, true, None).expect("v");
-        // println!("{:?}", );
-        match s {
-            Some((pin,_)) => {
-                let key_name = keys
-                    .get_mut(&pin.pin())
-                    .expect("invalid")
-                    .to_string();
-                println!("press {:?} ", key_name)
-            },
-            None => {
-                println!("none")
+        loop {
+            // println!("loop");
+            let s = gpio.poll_interrupts(pins, true, None).expect("v");
+            // println!("{:?}", );
+            match s {
+                Some((pin,_)) => {
+                    let key_name = keys
+                        .get_mut(&pin.pin())
+                        .expect("invalid")
+                        .to_string();
+                    println!("press {:?} ", key_name)
+                },
+                None => {
+                    println!("none")
+                }
             }
         }
     }
