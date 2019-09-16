@@ -48,6 +48,7 @@ fn setup_spi() -> Spidev {
     spi.configure(&options).expect("SPI configure error");
     return spi;
 }
+
 fn spi2()  {
     let spi = setup_spi();
     let mut dc = Pin::new(24);
@@ -70,38 +71,13 @@ fn spi2()  {
     disp.init().expect("not initialized");
     disp.flush().expect("not flushed");
     println!("flashed");
-    // disp.reset().expect("not flushed");
 
-
-    // let line = Line::new(Coord)::new(0, 0), Coord::new(64, 64)
-    // //     // .translate(Point::new(128 + PADDING * 2, 0))
-    //     .with_stroke(Some(BinaryColor::On));
-    // disp.draw(line.into_iter());
-
-    (0..10).map(|| {
-
+    for _ in 0..10 {
         disp.set_pixel(random(128),random(64), 1);
-    })
-    // disp.set_pixel(10,10, 1);
-    // disp.set_pixel(20,10, 1);
-    // disp.set_pixel(20,20, 1);
-    
-    
-    // // disp.set_pixel(10, 11, 1);
-    // // disp.set_pixel(10, 12, 1);
+    }
     
     disp.flush().expect("cannot flushed");
-    // println!("{:?}", disp.buffer);
     println!("end");
     // loop {}
 }
 
-// #[exception]
-// fn HardFault(ef: &ExceptionFrame) -> ! {
-//     panic!("{:#?}", ef);
-// }
-
-// #[panic_handler]
-// fn my_panic(_info: &core::panic::PanicInfo) -> ! {
-//     loop {}
-// }
