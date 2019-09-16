@@ -1,5 +1,6 @@
 
 const rpio = require("rpio")
+const {LOW} = rpio
 
 console.log("start")
 const buttons = [
