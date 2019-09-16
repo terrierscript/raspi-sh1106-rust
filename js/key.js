@@ -12,17 +12,17 @@ const buttons = [
   // 26,
 ]
 // buttons.map(b => {
-  //   console.log(b)
-  // })
-  rpio.open(21, rpio.INPUT,rpio.PULL_UP);
-  // rpio.open(20, rpio.INPUT, rpio.PULL_UP);
-  
-  const cb = (cbpin) => {
-    console.log("button",cbpin)
-  }
-  
-  buttons.map(b => {
-    rpio.poll(b, cb)
-  })
-  
-  console.log("end")
+//   console.log(b)
+// })
+rpio.open(21, rpio.INPUT,rpio.PULL_UP);
+// rpio.open(20, rpio.INPUT, rpio.PULL_UP);
+
+// const cb = (cbpin) => {
+//   console.log("button",cbpin)
+// }
+
+// buttons.map(b => {
+//   rpio.poll(b, cb)
+// })
+
+console.log("end")

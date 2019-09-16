@@ -33,7 +33,7 @@ fn main() -> ! {
                 &pins[1],
                 &pins[2],
             ],
-            false, 
+            true, 
             Some(Duration::new(1,0))
         ).expect("invalid intr");
         match intr {
