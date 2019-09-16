@@ -22,7 +22,13 @@ const cb = (cbpin) => {
 }
 
 // buttons.map(b => {
-  rpio.poll(21, cb)
+  
+  // rpio.poll(21, cb)
 // })
+setInterval(() => {
+  if (read(21) === LOW) {
+    console.log('Foo'); // Called when button is pressed
+  }
+}, 10);
 
 console.log("end")
