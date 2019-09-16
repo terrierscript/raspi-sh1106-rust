@@ -8,6 +8,8 @@ edition = "2018"
 
 [dependencies]
 linux-embedded-hal = {version= "0.2.2"}
+random-pos = { path = "../random-pos"}
+
 
 [dependencies.sh1106]
 version = "0.2.0"
@@ -20,4 +22,4 @@ features = ["graphics"]
 version = "0.2.3"
 
 [dependencies.embedded-graphics]
-version = "0.6.0-alpha.2"
+version = "0.4.9"

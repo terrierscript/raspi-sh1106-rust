@@ -27,102 +27,73 @@ use hal::Spidev;
 use hal::Pin;
 use hal::Delay;
 use hal::sysfs_gpio::Direction;
+use hal::spidev::SpidevOptions;
+
 use embedded_hal::digital::v2::OutputPin;
 use embedded_graphics::prelude::*;
 use embedded_graphics::primitives::{Line};
 use embedded_graphics::Drawing;
-use embedded_graphics::pixelcolor::BinaryColor;
+// use embedded_graphics::pixelcolor::BinaryColor;
 use sh1106::prelude::*;
 use sh1106::Builder;
+use random_pos::random;
 
 fn main() {
-    // i2c();
-    // spi();
     spi2();
 }
 
-fn i2c() {
-    println!("i2c start");
-    let i2c = I2cdev::new("/dev/i2c-1").expect("open i2c");
-    println!("open");
-
-    let mut disp: GraphicsMode<_> = Builder::new().connect_i2c(i2c).into();
-    println!("disp");
-
-    disp.init().expect("init");
-    println!("init");
-    disp.flush().expect("flush 1");
-    println!("flush");
-    disp.set_pixel(10, 10, 1);
-    disp.flush().expect("flush 2");
-
+fn setup_spi() -> Spidev {
+    let mut spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
+    let options = SpidevOptions::new().max_speed_hz(2_000_000).build();
+    spi.configure(&options).expect("SPI configure error");
+    return spi;
 }
-
-
-// fn reset(spi: Spidev){
-//     spi.write()
-// }
-
-// fn dc_pin() -> InputPin {
-//     let mut dc = Pin::new(24);
-//     dc.set_direction(Direction::Out).expect("dc direction failed");
-//     return dc.export().expect("dc pin unwrap failed");
-// }
-fn spi2() -> ! {
-    println!("start");
-    // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
-    // let s = 
-    let spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
-    // println!("spi connected");
-    // let b = Builder::new();
-    // while !dc.is_exported() {}
-    // println!("dc pin");
-    // dc.set_high();
-    
+fn spi2()  {
+    let spi = setup_spi();
     let mut dc = Pin::new(24);
     dc.export().expect("cannnot export dc pin");
     while !dc.is_exported() {}
     dc.set_direction(Direction::Out).expect("DC: cannot set out direction");
 
-    // dc.set_direction(Direction::Out).expect("dc direction failed");
-    // dc.export().expect("dc pin unwrap failed");
 
     let mut reset = Pin::new(25);
     reset.export().expect("reset pin unwrap failed");
     while !reset.is_exported() {}
-    println!("reset pin");
     reset.set_direction(Direction::Out).expect("reset direction failed");
 
-    println!("pin");
     let mut disp: GraphicsMode<_> = Builder::new().connect_spi(spi, dc).into();
-    println!("disp");
-    // let mut delay = Delay {};
-
-    // disp.reset(&mut reset, &mut delay);
     
+    let mut delay = Delay {};
+
+    disp.reset(&mut reset, &mut delay);
+    disp.set_rotation(DisplayRotation::Rotate180);
     disp.init().expect("not initialized");
-    println!("initialized");
-    println!("{:?}", disp.get_dimensions());
     disp.flush().expect("not flushed");
     println!("flashed");
     // disp.reset().expect("not flushed");
 
 
-    let line = Line::new(Point::new(0, 0), Point::new(64, 64))
-    //     // .translate(Point::new(128 + PADDING * 2, 0))
-        .stroke(Some(BinaryColor::On));
-
-
+    // let line = Line::new(Coord)::new(0, 0), Coord::new(64, 64)
+    // //     // .translate(Point::new(128 + PADDING * 2, 0))
+    //     .with_stroke(Some(BinaryColor::On));
     // disp.draw(line.into_iter());
-    disp.set_pixel(10,20, 1);
-    println!("pixel");
+
+    (0..10).map(|| {
+
+        disp.set_pixel(random(128),random(64), 1);
+    })
+    // disp.set_pixel(10,10, 1);
+    // disp.set_pixel(20,10, 1);
+    // disp.set_pixel(20,20, 1);
+    
+    
     // // disp.set_pixel(10, 11, 1);
     // // disp.set_pixel(10, 12, 1);
     
     disp.flush().expect("cannot flushed");
     // println!("{:?}", disp.buffer);
     println!("end");
-    loop {}
+    // loop {}
 }
 
 // #[exception]
