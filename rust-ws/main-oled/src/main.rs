@@ -56,7 +56,6 @@ fn spi2()  {
     while !dc.is_exported() {}
     dc.set_direction(Direction::Out).expect("DC: cannot set out direction");
 
-
     let mut reset = Pin::new(25);
     reset.export().expect("reset pin unwrap failed");
     while !reset.is_exported() {}

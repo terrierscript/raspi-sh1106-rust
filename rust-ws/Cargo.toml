@@ -5,7 +5,8 @@ members = [
   "keytest",
   "led-4",
   "random-pos",
-  "canvas"
+  "canvas",
+  "spidev-sh1106"
 ]
 
 

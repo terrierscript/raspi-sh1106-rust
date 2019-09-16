@@ -340,6 +340,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "spidev-sh1106"
+version = "0.1.0"
+dependencies = [
+ "embedded-hal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "linux-embedded-hal 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sh1106 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "sysfs_gpio"
 version = "0.5.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
