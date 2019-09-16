@@ -10,39 +10,44 @@ use rppal::gpio::{Gpio, InputPin,Trigger};
 // use sh1106::Builder;
 
 use std::collections::HashMap;
-
+use std::borrow::Borrow;   
 // use std::time::Duration;
 
 // fn pin<'a>(gpio: &'a Gpio, pin_id: &'a i32) -> &'a InputPin {
 //     return 
 // }
 
+// fn d_pin<'a>(gpio: Gpio, pid: u8) -> &'a InputPin {
+//     let mut p = gpio.get(pid).expect("get pin").into_input_pullup();
+//     p.set_interrupt(Trigger::Both).expect("failed set interrupt");
+//     &p
+// }
 
-fn hook_key( pid: u8, key_name: String) {
-    // todo
-    let gpio = Gpio::new().expect( "Failed Gpio::new" );
+// fn hook_key( pid: u8, key_name: String) {
+//     // todo
+//     let gpio = Gpio::new().expect( "Failed Gpio::new" );
     
-    let mut b1 : InputPin = {
-        let mut p = gpio.get(pid).expect("get pin").into_input_pullup();
-        p.set_interrupt(Trigger::Both).expect("failed set interrupt");
-        p
-    };
-    println!("start {}", key_name);
-    // b1.poll_interrupt()
-    loop {
-        // println!("loop");
-        let s = b1.poll_interrupt(false, None).expect("v");
-        // println!("{:?}", );
-        match s {
-            Some(n) => {
-                println!("press {} {}", key_name, n)
-            },
-            None => {
-                println!("none")
-            }
-        }
-    }
-}
+//     let mut b1 : InputPin = {
+//         let mut p = gpio.get(pid).expect("get pin").into_input_pullup();
+//         p.set_interrupt(Trigger::Both).expect("failed set interrupt");
+//         p
+//     };
+//     println!("start {}", key_name);
+//     // b1.poll_interrupt()
+//     loop {
+//         // println!("loop");
+//         let s = b1.poll_interrupt(false, None).expect("v");
+//         // println!("{:?}", );
+//         match s {
+//             Some(n) => {
+//                 println!("press {} {}", key_name, n)
+//             },
+//             None => {
+//                 println!("none")
+//             }
+//         }
+//     }
+// }
 
 fn main() {
     let mut keys = HashMap::new();
@@ -54,73 +59,37 @@ fn main() {
     keys.insert(    21, "KEY1_PIN"        );
     keys.insert(    20, "KEY2_PIN"        );
     keys.insert(    16, "KEY3_PIN"        );
-
-    println!("Hello, world!!!!");
-    for (pid, key_name) in keys.iter(){
-        hook_key( *pid, key_name.to_string())
-    };
-    // let mut b1 : InputPin = {
-    //     let mut p = gpio.get(21).expect("get 21 pin").into_input_pullup();
-    //     p.set_interrupt(Trigger::Both).expect("failed set interrupt");
-    //     p
-    // };
-    // b1.poll_interrupt()
-    // loop {
-    //     // println!("loop");
-    //     let s = b1.poll_interrupt(false, None).expect("v");
-    //     // println!("{:?}", );
-    //     match s {
-    //         Some(n) => {
-    //             println!("N")
-    //         },
-    //         None => {
-    //             println!("none")
-    //         }
-    //     }
-    //     // let intr = gpio.poll_interrupts(
-    //     //     &[&b1],
-    //     //     true, 
-    //     //     Some(Duration::new(1,0))
-    //     // ).expect("invalid intr");
-    //     // match intr {
-    //     //     None => { println!("loop")},
-    //     //     Some((_pin,_)) => {
-    //     //         println!("pinn!")
-    //     //     }
-    //     // }
-
-    //     // let z = b1.read();
-    //     // println!("loop {}", z);
-    // }
-    // let pin_ids = &[6,19,5,26,13,21,20,16];
-    // let pin_ids = &[21,20,16];
-    // let pins: Vec<_> = pin_ids.iter()
-    //     .map(|pid| gpio
-    //         .get(*pid)
-    //         .expect("Cannot pin")
-    //         .into_input_pullup()
-    //     )
-    //     .collect();
-
-    // let ps = pins.as_slice();
-    // println!("loop start");
+    let gpio = Gpio::new().expect( "Failed Gpio::new" );
     
-    // loop{
-    //     let intr = gpio.poll_interrupts(
-    //         // pins,
-    //         &[
-    //             &pins[0],
-    //             &pins[1],
-    //             &pins[2],
-    //         ],
-    //         true, 
-    //         Some(Duration::new(1,0))
-    //     ).expect("invalid intr");
-    //     match intr {
-    //         None => { println!("loop")},
-    //         Some((_pin,_)) => {
-    //             println!("pinn!")
-    //         }
-    //     }
-    // }
+    println!("Hello, world!!!!");
+    let vec : Vec<InputPin> = keys.iter_mut().map(|(pid, _)| {
+        let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
+        p.set_interrupt(Trigger::Both).expect("failed set interrupt");
+        p
+    }).collect();
+    let v2 : Vec<&InputPin> = vec.into_iter().map(|v| &v).collect();
+
+    let pins = v2.as_slice();
+
+    loop {
+        // println!("loop");
+        let s = gpio.poll_interrupts(pins, true, None).expect("v");
+        // println!("{:?}", );
+        match s {
+            Some((pin,_)) => {
+                let key_name = keys
+                    .get_mut(&pin.pin())
+                    .expect("invalid")
+                    .to_string();
+                println!("press {:?} ", key_name)
+            },
+            None => {
+                println!("none")
+            }
+        }
+    }
+
 }
+
+
+
