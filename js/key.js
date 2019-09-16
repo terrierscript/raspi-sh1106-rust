@@ -1,6 +1,9 @@
+const { SH1106 } = require("sh1106")
 
 const rpio = require("rpio")
 const {LOW} = rpio
+
+const device = new SH1106()
 
 console.log("start")
 const buttons = [
@@ -27,7 +30,6 @@ const cb = (cbpin) => {
   // rpio.poll(21, cb)
 // })
 setInterval(() => {
-  console.log(rpio.read(21))
   buttons.map(b => {
     const l = rpio.read(b)
     console.log(b, l)
@@ -35,6 +37,6 @@ setInterval(() => {
       console.log('Foo', b); // Called when button is pressed
     }
   })
-}, 100);
+}, 1000);
 
 console.log("end")
