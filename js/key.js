@@ -8,9 +8,9 @@ const device = new SH1106()
 console.log("start")
 const buttons = [
   21,
-  // 20,
+  20,
   16,
-  // 6,
+  6,
   19,
   5,
   26,
