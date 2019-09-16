@@ -56,7 +56,7 @@ fn spi2()  {
     disp.flush().expect("not flushed");
     println!("flashed");
 
-    for _ in 0..10 {
+    for _ in 0..100 {
         disp.set_pixel(random(128),random(64), 1);
     }
     
