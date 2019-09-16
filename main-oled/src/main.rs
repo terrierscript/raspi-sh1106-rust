@@ -39,6 +39,7 @@ use sh1106::prelude::*;
 use sh1106::Builder;
 use random_pos::random;
 use spidev_sh1106::SpidevSH1106;
+// use main_oled::keys;
 
 fn main() {
     spi2();
@@ -62,6 +63,7 @@ fn spi2()  {
     
     disp.flush().expect("cannot flushed");
     println!("end");
+    // set_keys();
     // loop {}
 }
 
