@@ -1,7 +1,5 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+use embedded_graphics::prelude::*;
+
+pub fn sandbox_draw() {
+    
 }

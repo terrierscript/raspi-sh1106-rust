@@ -1,10 +1,9 @@
 [workspace]
 members = [
-  "oled",
+  "main-oled",
   "sandbox",
   "keytest",
   "led-4",
-  "r-pin",
   "random-pos",
   "canvas"
 ]
