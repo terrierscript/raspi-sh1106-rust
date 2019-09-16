@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "optinalDependencies": {
-    "sh1106": "*"
+    "sh1106": "*",
+    "rpio": "*"
   }
 }
