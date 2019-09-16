@@ -1,5 +1,5 @@
 [package]
-name = "ssd1306-raspi-examples"
+name = "sh-raspi-example"
 version = "0.1.0"
 
 [dependencies]
@@ -8,8 +8,10 @@ linux-embedded-hal = "0.2.0"
 
 [dependencies.sh1106]
 version = "0.2.0"
-feature = ["graphics"]
+# version = "0.3.0-alpha.2"
+# feature = ["graphics"]
 # graphics = ["embedded-graphics"]
 
 [dependencies.embedded-graphics]
 version = "0.4.9"
+# version = "0.6.0-alpha.2"

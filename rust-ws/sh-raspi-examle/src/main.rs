@@ -43,7 +43,7 @@ fn main() {
     disp.set_pixel(10, 10, 1);
     disp.set_pixel(20, 20, 1);
     disp.set_pixel(30, 30, 1);
-    // disp.draw(Line::new(Coord::new(8, 16 + 16), Coord::new(8 + 16, 16 + 16)).into_iter());
+    disp.draw(Line::new(Coord::new(8, 16 + 16), Coord::new(8 + 16, 16 + 16)).into_iter());
     // disp.draw(Line::new(Coord::new(8, 16 + 16),Coord::new(8 + 8, 16), Style::with_stroke(PixelColor)).into_iter());
     // disp.draw(Line::new((8 + 16, 16 + 16), (8 + 8, 16), 1).into_iter());
 
