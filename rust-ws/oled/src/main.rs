@@ -59,18 +59,33 @@ fn i2c() {
 }
 
 
+// fn reset(spi: Spidev){
+//     spi.write()
+// }
+
+// fn dc_pin() -> InputPin {
+//     let mut dc = Pin::new(24);
+//     dc.set_direction(Direction::Out).expect("dc direction failed");
+//     return dc.export().expect("dc pin unwrap failed");
+// }
 fn spi2() -> ! {
     println!("start");
     // let i2c = I2cdev::new("/dev/i2c-1").unwrap();
+    // let s = 
     let spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
-    println!("spi connected");
+    // println!("spi connected");
     // let b = Builder::new();
-    let mut dc = Pin::new(24);
-    dc.export().expect("dc pin unwrap failed");
     // while !dc.is_exported() {}
     // println!("dc pin");
     // dc.set_high();
-    dc.set_direction(Direction::Out).expect("dc direction failed");
+    
+    let mut dc = Pin::new(24);
+    dc.export().expect("cannnot export dc pin");
+    while !dc.is_exported() {}
+    dc.set_direction(Direction::Out).expect("DC: cannot set out direction");
+
+    // dc.set_direction(Direction::Out).expect("dc direction failed");
+    // dc.export().expect("dc pin unwrap failed");
 
     let mut reset = Pin::new(25);
     reset.export().expect("reset pin unwrap failed");
@@ -93,18 +108,18 @@ fn spi2() -> ! {
     // disp.reset().expect("not flushed");
 
 
-    // let line = Line::new(Point::new(0, 0), Point::new(64, 64))
-    // //     // .translate(Point::new(128 + PADDING * 2, 0))
-    //     .stroke(Some(BinaryColor::On));
+    let line = Line::new(Point::new(0, 0), Point::new(64, 64))
+    //     // .translate(Point::new(128 + PADDING * 2, 0))
+        .stroke(Some(BinaryColor::On));
 
 
     // disp.draw(line.into_iter());
-    disp.set_pixel(60, 60, 1);
+    disp.set_pixel(10,20, 1);
     println!("pixel");
     // // disp.set_pixel(10, 11, 1);
     // // disp.set_pixel(10, 12, 1);
     
-    // disp.flush().expect("cannot flushed");
+    disp.flush().expect("cannot flushed");
     // println!("{:?}", disp.buffer);
     println!("end");
     loop {}

@@ -1,5 +1,5 @@
 fn main() {
-    let a = &[1,2,3];
+    let a = &[1, 2, 3];
     for aa in a {
         let b = aa * aa;
         let c = iss(aa);

@@ -3,7 +3,9 @@ members = [
   "oled",
   "sandbox",
   "keytest",
-  "led-4"
+  "led-4",
+  "r-pin",
+  "sh-raspi-examle"
 ]
 
 
