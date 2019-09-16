@@ -17,12 +17,12 @@ const buttons = [
 rpio.open(21, rpio.INPUT,rpio.PULL_UP);
 // rpio.open(20, rpio.INPUT, rpio.PULL_UP);
 
-// const cb = (cbpin) => {
-//   console.log("button",cbpin)
-// }
+const cb = (cbpin) => {
+  console.log("button",cbpin)
+}
 
 // buttons.map(b => {
-//   rpio.poll(b, cb)
+  rpio.poll(21, cb)
 // })
 
 console.log("end")
