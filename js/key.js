@@ -16,7 +16,7 @@ const buttons = [
 //   console.log(b)
 // })
 rpio.open(21, rpio.INPUT,rpio.PULL_UP);
-// rpio.open(20, rpio.INPUT, rpio.PULL_UP);
+rpio.open(20, rpio.INPUT, rpio.PULL_DOWN);
 
 const cb = (cbpin) => {
   console.log("button",cbpin)
@@ -31,6 +31,6 @@ setInterval(() => {
   if (rpio.read(21) === LOW) {
     console.log('Foo'); // Called when button is pressed
   }
-}, 10);
+}, 100);
 
 console.log("end")
