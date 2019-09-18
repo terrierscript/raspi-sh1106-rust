@@ -33,7 +33,7 @@ fn spi2() -> ! {
 
     disp.flush().expect("cannot flushed");
     // set_keys();
-    hook_keyevent(| lv| -> {
+    hook_keyevent(| lv| -> { //TOOD
         
         println!("{:?} {:?}",  lv);
         // if lv === HIGH
