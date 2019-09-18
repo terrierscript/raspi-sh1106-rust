@@ -1,5 +1,5 @@
-use std::borrow::Borrow;
 use std::collections::HashMap;
+
 pub struct Keymap {
     map: HashMap<u8, &'static str>,
 }
@@ -30,11 +30,27 @@ impl Keymap {
         // .clone()
         // .borrow()
     }
-    
     pub fn get_name(&self, pin: u8) -> Option<String> {
         match self.map.get(&pin) {
             Some(x) => Some(x.to_string()),
             None => None,
+        }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::Keymap;
+
+    #[test]
+    pub fn test1() {
+        let keymap = Keymap::new();
+        for k in keymap.keys().into_iter() {
+            let x = || {
+                let name = keymap.get_name(*k);
+                println!("{:?}", name);
+            };
+            x();
         }
     }
 }
