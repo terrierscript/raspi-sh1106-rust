@@ -1,12 +1,10 @@
 [workspace]
 members = [
   "main-oled",
-  "sandbox",
+  "spidev-sh1106",
   "keytest",
-  "led-4",
   "random-pos",
   "canvas",
-  "spidev-sh1106"
 ]
 
 

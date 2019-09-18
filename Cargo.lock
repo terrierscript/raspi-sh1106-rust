@@ -104,13 +104,6 @@ version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "led-4"
-version = "0.1.0"
-dependencies = [
- "rppal 0.11.3 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "libc"
 version = "0.2.62"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -313,10 +306,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "semver 0.1.20 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
-
-[[package]]
-name = "sandbox"
-version = "0.1.0"
 
 [[package]]
 name = "semver"

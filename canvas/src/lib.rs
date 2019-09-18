@@ -1,5 +1,3 @@
 use embedded_graphics::prelude::*;
 
-pub fn sandbox_draw() {
-    
-}
+pub fn sandbox_draw() {}

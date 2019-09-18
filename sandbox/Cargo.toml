@@ -1,9 +1,0 @@
-[package]
-name = "sandbox"
-version = "0.1.0"
-authors = ["terrierscript <13282103+terrierscript@users.noreply.github.com>"]
-edition = "2018"
-# private = true
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]

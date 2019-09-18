@@ -1,33 +1,25 @@
 extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
-// use hal::I2cdev;
-use hal::Spidev;
-use hal::Pin;
-use hal::Delay;
-use hal::sysfs_gpio::Direction;
 use hal::spidev::SpidevOptions;
-// use hal::sysfs_gpio::Pin;
-// use embedded_hal::digital::v2::OutputPin;
+use hal::sysfs_gpio::Direction;
+use hal::Delay;
+use hal::Pin;
+use hal::Spidev;
 
-// use sh1106::prelude::*;
-// use sh1106::Builder;
 use sh1106::interface::DisplayInterface;
+use sh1106::interface::SpiInterface;
 use sh1106::mode::GraphicsMode;
 use sh1106::Error;
-use sh1106::interface::SpiInterface;
+
 pub struct SpidevSH1106 {
     pub spidev: Spidev,
-    // mut dc_pin: Pin,
-    // mut reset_pin: Pin
 }
 
 impl SpidevSH1106 {
-    pub fn new() -> Self{
+    pub fn new() -> Self {
         SpidevSH1106 {
-            spidev : SpidevSH1106::setup_spi(),
-            // dc_pin: SpidevSH1106::dc_pin(),
-            // reset_pin: SpidevSH1106::reset_pin(),
+            spidev: SpidevSH1106::setup_spi(),
         }
     }
 
@@ -42,7 +34,8 @@ impl SpidevSH1106 {
         let dc = Pin::new(24);
         dc.export().expect("cannnot export dc pin");
         while !dc.is_exported() {}
-        dc.set_direction(Direction::Out).expect("DC: cannot set out direction");
+        dc.set_direction(Direction::Out)
+            .expect("DC: cannot set out direction");
         return dc;
     }
 
@@ -50,11 +43,13 @@ impl SpidevSH1106 {
         let reset = Pin::new(25);
         reset.export().expect("reset pin unwrap failed");
         while !reset.is_exported() {}
-        reset.set_direction(Direction::Out).expect("reset direction failed");
+        reset
+            .set_direction(Direction::Out)
+            .expect("reset direction failed");
         return reset;
     }
 
-    // pub fn generate_display<DI>(&self) -> GraphicsMode<DI> where 
+    // pub fn generate_display<DI>(&self) -> GraphicsMode<DI> where
     //     DI: DisplayInterface
     // {
     //     let mut dc = Self::dc_pin();
@@ -62,28 +57,11 @@ impl SpidevSH1106 {
     // }
 
     pub fn reset<DI>(disp: &mut GraphicsMode<DI>) -> Result<(), Error<(), ()>>
-    where 
+    where
         DI: DisplayInterface,
     {
         let mut rpin = Self::reset_pin();
         let mut delay = Delay {};
         return disp.reset(&mut rpin, &mut delay);
     }
-    // pub fn reset<DI: DisplayInterface>(&self) -> GraphicsMode<DI> {
-
-    //     let mut reset = Pin::new(25);
-    //     reset.export().expect("reset pin unwrap failed");
-    //     while !reset.is_exported() {}
-    //     reset.set_direction(Direction::Out).expect("reset direction failed");
-
-    //     let mut disp: GraphicsMode<_> = Builder::new().connect_spi(self.spidev, dc).into();
-        
-    //     let mut delay = Delay {};
-
-    //     disp.reset(&mut reset, &mut delay);
-    //     disp.set_rotation(DisplayRotation::Rotate180);
-    //     disp.init().expect("not initialized");
-    //     disp.flush().expect("not flushed");
-    //     return disp;
-    // }
 }
