@@ -2,7 +2,8 @@
 members = [
   "main-oled",
   "spidev-sh1106",
-  "keytest",
+  "keys",
+  "keymap",
   "random-pos",
   "canvas",
 ]
