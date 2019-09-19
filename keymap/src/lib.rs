@@ -1,4 +1,6 @@
+// use embedded_hal::digital::v2::InputPin;
 use std::collections::HashMap;
+// use std::borrow::Borrow;
 
 pub struct Keymap {
     map: HashMap<u8, &'static str>,
@@ -36,6 +38,7 @@ impl Keymap {
             None => None,
         }
     }
+
 }
 
 #[cfg(test)]
