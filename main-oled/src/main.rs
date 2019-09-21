@@ -39,7 +39,7 @@ fn spi2() -> ! {
     // set_keys();
     let event_cb = |name: String, lv: i8 |  {
         println!("{:?} {:?}", name, lv);
-        render_dot(&mut disp);
+        // render_dot(&mut disp);
         // for _ in 0..10 {
         //     disp.set_pixel(random(128), random(64), 1);
         // }
