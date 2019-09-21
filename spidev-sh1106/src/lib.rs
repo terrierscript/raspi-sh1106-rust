@@ -1,3 +1,5 @@
+#[no_std]
+#[no_main]
 extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
@@ -82,8 +84,7 @@ impl SpidevSH1106 {
     // pub fn generate_display<DI, CommE>(&self) -> GraphicsMode<DI> where
     //     DI: DisplayInterface<Error=CommE>
     // {
-    //     let mut dc = Self::dc_pin();
-    //     return Builder::new().connect_spi(self.spidev, dc)
+    //     return Builder::new().connect_spi(self.spidev, self.dc)
     // }
 
     pub fn reset<DI>(disp: &mut GraphicsMode<DI>) -> Result<(), Error<(), ()>>
