@@ -6,6 +6,7 @@ extern crate sh1106;
 // use rppal::gpio::{Gpio, InputPin, Trigger};
 use random_pos::random;
 use sh1106::prelude::*;
+use sh1106::interface::DisplayInterface;
 use sh1106::Builder;
 use spidev_sh1106::SpidevSH1106;
 // use key_event::get_pins;
@@ -18,12 +19,14 @@ fn main() {
 
 fn spi2() -> ! {
     let sd = SpidevSH1106::new();
-    let mut disp: GraphicsMode<_> = Builder::new().connect_spi(sd.spidev, sd.dc_pin).into();
+    let mut disp: GraphicsMode<_> = Builder::new()
+    .with_rotation(DisplayRotation::Rotate180)
+    .connect_spi(sd.spidev, sd.dc_pin).into();
 
     SpidevSH1106::reset(&mut disp).expect("cannot reset");
 
-    disp.set_rotation(DisplayRotation::Rotate180)
-        .expect("failed rotation");
+    // disp.set_rotation(DisplayRotation::Rotate180)
+    //     .expect("failed rotation");
     disp.init().expect("not initialized");
     disp.flush().expect("not flushed");
     println!("flashed");
@@ -36,8 +39,9 @@ fn spi2() -> ! {
     // set_keys();
     let event_cb = |name: String, lv: i8 |  {
         println!("{:?} {:?}", name, lv);
+        render_dot(&mut disp);
         // for _ in 0..10 {
-            // disp.set_pixel(random(128), random(64), 1);
+        //     disp.set_pixel(random(128), random(64), 1);
         // }
     };
     hook_keyevent(event_cb);
@@ -49,3 +53,12 @@ fn spi2() -> ! {
     println!("end");
     loop {}
 }
+
+// fn render_dot<T>(disp: &mut GraphicsMode<T>)
+// where T: DisplayInterface
+// {
+//     for _ in 0..10 {
+//         disp.set_pixel(random(128), random(64), 1);
+//     }
+//     disp.flush().unwrap();
+// }
