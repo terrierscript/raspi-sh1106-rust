@@ -12,8 +12,16 @@ use sh1106::interface::DisplayInterface;
 use sh1106::mode::displaymode::DisplayModeTrait;
 use sh1106::mode::GraphicsMode;
 use sh1106::Error;
+use sh1106::prelude::*;
+
+// use intf::DevIntf;
+pub mod intf;
 
 // use sh1106::interface::SpiInterface;
+
+        // SPI: hal::blocking::spi::Transfer<u8, Error = CommE>
+        //     + hal::blocking::spi::Write<u8, Error = CommE>,
+        // DC: OutputPin<Error = PinE>,
 
 pub struct SpidevSH1106 {
     pub spidev: Spidev,
@@ -21,7 +29,7 @@ pub struct SpidevSH1106 {
 }
 
 
-impl SpidevSH1106{
+impl SpidevSH1106 {
     pub fn new() -> Self {
         SpidevSH1106 {
             spidev: SpidevSH1106::setup_spi(),
@@ -29,30 +37,28 @@ impl SpidevSH1106{
         }
     }
 
-    // pub fn display<DI>(&self) -> GraphicsMode<DI>
-    // where
-    //     DI: DisplayInterface ,
-    //     // // NMODE: DisplayModeTrait<
-    //     // //     DI2,
-    //     // //     // SpiInterface<hal::Spidev, hal::Pin, NoOutputPin>
-    //     // // >
-    //     // NPIN:
-    //     // NMODE: sh1106::mode::displaymode::DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, NPIN>>
-    //     // DI: DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, sh1106::builder::NoOutputPin>>
+    // pub fn display<DI: DisplayInterface>(&self) -> GraphicsMode<DI>
+    
+    // // where
+    // //     DI: DisplayInterface ,
+    // //     // // NMODE: DisplayModeTrait<
+    // //     // //     DI2,
+    // //     // //     // SpiInterface<hal::Spidev, hal::Pin, NoOutputPin>
+    // //     // // >
+    // //     // NPIN:
+    // //     // NMODE: sh1106::mode::displaymode::DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, NPIN>>
+    // //     // DI: DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, sh1106::builder::NoOutputPin>>
+    
+    // pub fn display<DI, CommE>(&self) -> DisplayModeTrait<DI> where
+    //     DI: DisplayInterface<Error=CommE>
     // {
-    //     Builder::new().connect_spi(
+    //     let mut d : GraphicsMode<_> = Builder::new().connect_spi(
     //         SpidevSH1106::setup_spi(),
     //         SpidevSH1106::dc_pin()
-    //     )
-    //     .into()
+    //     );
+    //     return d;
     // }
 
-    fn setup_spi() -> Spidev {
-        let mut spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
-        let options = SpidevOptions::new().max_speed_hz(2_000_000).build();
-        spi.configure(&options).expect("SPI configure error");
-        return spi;
-    }
 
     fn dc_pin() -> Pin {
         let dc = Pin::new(24);
@@ -73,8 +79,8 @@ impl SpidevSH1106{
         return reset;
     }
 
-    // pub fn generate_display<DI>(&self) -> GraphicsMode<DI> where
-    //     DI: DisplayInterface
+    // pub fn generate_display<DI, CommE>(&self) -> GraphicsMode<DI> where
+    //     DI: DisplayInterface<Error=CommE>
     // {
     //     let mut dc = Self::dc_pin();
     //     return Builder::new().connect_spi(self.spidev, dc)
@@ -88,4 +94,43 @@ impl SpidevSH1106{
         let mut delay = Delay {};
         return disp.reset(&mut rpin, &mut delay);
     }
+
+    fn setup_spi() -> Spidev {
+        let mut spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
+        let options = SpidevOptions::new().max_speed_hz(2_000_000).build();
+        spi.configure(&options).expect("SPI configure error");
+        return spi;
+    }
+
 }
+
+// impl intf::DevIntf for SpidevSH1106 {
+//     fn generate_display<DI>(&self) -> GraphicsMode<DI>
+//     where DI: DisplayInterface{
+ 
+//         let d : GraphicsMode<_> = Builder::new().connect_spi(
+//             SpidevSH1106::setup_spi(),
+//             SpidevSH1106::dc_pin()
+//         ).into();
+//         return d;
+//     }
+// }
+
+pub struct SpidevSH1106Display<DI> where DI : DisplayInterface{
+    display: GraphicsMode<DI>
+}
+
+// impl SpidevSH1106Display<DisplayInterface<Error=CommE>> {
+//      pub fn new() -> Self {
+//         let spidev = SpidevSH1106::new();
+//         let d : GraphicsMode<_> = Builder::new().connect_spi(
+//             SpidevSH1106::setup_spi(),
+//             SpidevSH1106::dc_pin()
+//         ).into();
+//         SpidevSH1106Display{
+//             display: d
+//         }
+        
+//     }
+   
+// }
