@@ -9,27 +9,30 @@ use hal::Delay;
 use hal::Pin;
 use hal::Spidev;
 
-use sh1106::Builder;
+use sh1106::builder::NoOutputPin;
 use sh1106::interface::DisplayInterface;
 use sh1106::mode::displaymode::DisplayModeTrait;
 use sh1106::mode::GraphicsMode;
-use sh1106::Error;
 use sh1106::prelude::*;
-
+use sh1106::properties::DisplayProperties;
+use sh1106::Builder;
+use sh1106::Error;
+use std::boxed::Box;
+use std::rc::Rc;
+// use std::
 // use intf::DevIntf;
 pub mod intf;
 
 // use sh1106::interface::SpiInterface;
 
-        // SPI: hal::blocking::spi::Transfer<u8, Error = CommE>
-        //     + hal::blocking::spi::Write<u8, Error = CommE>,
-        // DC: OutputPin<Error = PinE>,
+// SPI: hal::blocking::spi::Transfer<u8, Error = CommE>
+//     + hal::blocking::spi::Write<u8, Error = CommE>,
+// DC: OutputPin<Error = PinE>,
 
 pub struct SpidevSH1106 {
     pub spidev: Spidev,
-    pub dc_pin: Pin
+    pub dc_pin: Pin,
 }
-
 
 impl SpidevSH1106 {
     pub fn new() -> Self {
@@ -40,7 +43,6 @@ impl SpidevSH1106 {
     }
 
     // pub fn display<DI: DisplayInterface>(&self) -> GraphicsMode<DI>
-    
     // // where
     // //     DI: DisplayInterface ,
     // //     // // NMODE: DisplayModeTrait<
@@ -50,7 +52,6 @@ impl SpidevSH1106 {
     // //     // NPIN:
     // //     // NMODE: sh1106::mode::displaymode::DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, NPIN>>
     // //     // DI: DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, sh1106::builder::NoOutputPin>>
-    
     // pub fn display<DI, CommE>(&self) -> DisplayModeTrait<DI> where
     //     DI: DisplayInterface<Error=CommE>
     // {
@@ -60,7 +61,6 @@ impl SpidevSH1106 {
     //     );
     //     return d;
     // }
-
 
     fn dc_pin() -> Pin {
         let dc = Pin::new(24);
@@ -102,13 +102,11 @@ impl SpidevSH1106 {
         spi.configure(&options).expect("SPI configure error");
         return spi;
     }
-
 }
 
 // impl intf::DevIntf for SpidevSH1106 {
 //     fn generate_display<DI>(&self) -> GraphicsMode<DI>
 //     where DI: DisplayInterface{
- 
 //         let d : GraphicsMode<_> = Builder::new().connect_spi(
 //             SpidevSH1106::setup_spi(),
 //             SpidevSH1106::dc_pin()
@@ -117,21 +115,25 @@ impl SpidevSH1106 {
 //     }
 // }
 
-pub struct SpidevSH1106Display<DI> where DI : DisplayInterface{
-    display: GraphicsMode<DI>
+pub trait MyDisplayModeTrait<DI> {
+    /// Allocate all required data and initialise display for mode
+    // pub fn new() -> Self;
+    fn new(properties: DisplayProperties<DI>) -> Self;
+
+    /// Release resources for reuse with different mode
+    fn release(self) -> DisplayProperties<DI>;
 }
 
-// impl SpidevSH1106Display<DisplayInterface<Error=CommE>> {
-//      pub fn new() -> Self {
-//         let spidev = SpidevSH1106::new();
-//         let d : GraphicsMode<_> = Builder::new().connect_spi(
-//             SpidevSH1106::setup_spi(),
-//             SpidevSH1106::dc_pin()
-//         ).into();
-//         SpidevSH1106Display{
-//             display: d
-//         }
-        
-//     }
-   
+// pub struct SpidevSH1106Display {
+//     // display: MyDisplayModeTrait<dyn DisplayInterface<Error = CommE>>,
 // }
+
+impl SpidevSH1106 {
+    // pub fn gen() -> Box<GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>>>
+    pub fn gen() -> GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>> {
+        let d: GraphicsMode<_> = Builder::new()
+            .connect_spi(SpidevSH1106::setup_spi(), SpidevSH1106::dc_pin())
+            .into();
+        return d;
+    }
+}
