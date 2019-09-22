@@ -128,9 +128,12 @@ pub trait MyDisplayModeTrait<DI> {
 //     // display: MyDisplayModeTrait<dyn DisplayInterface<Error = CommE>>,
 // }
 
+type If = SpiInterface<Spidev, Pin, NoOutputPin>;
+
 impl SpidevSH1106 {
     // pub fn gen() -> Box<GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>>>
-    pub fn gen() -> GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>> {
+    // pub fn gen() -> GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>> {
+    pub fn gen() -> GraphicsMode<If> {
         let d: GraphicsMode<_> = Builder::new()
             .connect_spi(SpidevSH1106::setup_spi(), SpidevSH1106::dc_pin())
             .into();
