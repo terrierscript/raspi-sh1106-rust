@@ -8,6 +8,7 @@ use hal::sysfs_gpio::Direction;
 use hal::Delay;
 use hal::Pin;
 use hal::Spidev;
+use random_pos::random;
 
 use sh1106::builder::NoOutputPin;
 use sh1106::interface::DisplayInterface;
@@ -101,6 +102,14 @@ impl SpidevSH1106 {
         let options = SpidevOptions::new().max_speed_hz(2_000_000).build();
         spi.configure(&options).expect("SPI configure error");
         return spi;
+    }
+
+    pub fn draw_random<DI>(disp: &mut GraphicsMode<DI>)
+    // -> (Result<(), Error<(), ()>>)
+    where
+        DI: DisplayInterface,
+    {
+        disp.set_pixel(random(128), random(64), 1);
     }
 }
 

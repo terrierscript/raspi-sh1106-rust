@@ -10,6 +10,7 @@ use sh1106::Builder;
 use spidev_sh1106::SpidevSH1106;
 // use key_event::get_pins;
 use key_event::hook_keyevent;
+use std::borrow::Borrow;
 use std::boxed::Box;
 use std::rc::Rc;
 
@@ -37,10 +38,12 @@ fn spi2() -> ! {
     }
 
     disp.flush().expect("cannot flushed");
-    let b = Box::new(disp);
+    let b = Rc::new(disp);
     // set_keys();
     let event_cb = move |name: String, lv: i8| {
         println!("{:?} {:?}", name, lv);
+        SpidevSH1106::draw_random(&mut disp);
+        // b;
         // b.as_ref().set_pixel(random(128), random(64), 1)
         // render_dot(&mut disp);
         // for _ in 0..10 {

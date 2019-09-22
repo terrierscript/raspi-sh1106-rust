@@ -346,6 +346,7 @@ version = "0.1.0"
 dependencies = [
  "embedded-hal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "linux-embedded-hal 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "random-pos 0.1.0",
  "sh1106 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
