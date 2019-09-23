@@ -1,6 +1,6 @@
 [workspace]
 members = [
-  "main-oled",
+  "main",
   "spidev-sh1106",
   "key-event",
   "random-pos",
