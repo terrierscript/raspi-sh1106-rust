@@ -24,11 +24,7 @@ use std::rc::Rc;
 // use intf::DevIntf;
 pub mod intf;
 
-// use sh1106::interface::SpiInterface;
-
-// SPI: hal::blocking::spi::Transfer<u8, Error = CommE>
-//     + hal::blocking::spi::Write<u8, Error = CommE>,
-// DC: OutputPin<Error = PinE>,
+type SpidevInterface = SpiInterface<Spidev, Pin, NoOutputPin>;
 
 pub struct SpidevSH1106 {
     pub spidev: Spidev,
@@ -42,26 +38,6 @@ impl SpidevSH1106 {
             dc_pin: SpidevSH1106::dc_pin(),
         }
     }
-
-    // pub fn display<DI: DisplayInterface>(&self) -> GraphicsMode<DI>
-    // // where
-    // //     DI: DisplayInterface ,
-    // //     // // NMODE: DisplayModeTrait<
-    // //     // //     DI2,
-    // //     // //     // SpiInterface<hal::Spidev, hal::Pin, NoOutputPin>
-    // //     // // >
-    // //     // NPIN:
-    // //     // NMODE: sh1106::mode::displaymode::DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, NPIN>>
-    // //     // DI: DisplayModeTrait<sh1106::interface::SpiInterface<hal::Spidev, hal::Pin, sh1106::builder::NoOutputPin>>
-    // pub fn display<DI, CommE>(&self) -> DisplayModeTrait<DI> where
-    //     DI: DisplayInterface<Error=CommE>
-    // {
-    //     let mut d : GraphicsMode<_> = Builder::new().connect_spi(
-    //         SpidevSH1106::setup_spi(),
-    //         SpidevSH1106::dc_pin()
-    //     );
-    //     return d;
-    // }
 
     fn dc_pin() -> Pin {
         let dc = Pin::new(24);
@@ -137,14 +113,13 @@ pub trait MyDisplayModeTrait<DI> {
 //     // display: MyDisplayModeTrait<dyn DisplayInterface<Error = CommE>>,
 // }
 
-type If = SpiInterface<Spidev, Pin, NoOutputPin>;
-
 impl SpidevSH1106 {
     // pub fn gen() -> Box<GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>>>
     // pub fn gen() -> GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>> {
-    pub fn gen_display() -> GraphicsMode<If> {
+    pub fn gen_display(&self) -> GraphicsMode<SpidevInterface> {
         let d: GraphicsMode<_> = Builder::new()
             .connect_spi(SpidevSH1106::setup_spi(), SpidevSH1106::dc_pin())
+            // .connect_spi(self.spidev, self.dc_pin)
             .into();
         return d;
     }
