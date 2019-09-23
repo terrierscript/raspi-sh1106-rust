@@ -29,7 +29,7 @@ fn spi2() {
     disp.flush().expect("cannot flushed");
     // let b = Rc::new(disp);
     // set_keys();
-    let event_cb = |name: String, lv: i8| {
+    let event_cb  = |name: String, lv: i8| {
         println!("{:?} {:?}", name, lv);
         let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
         // disp.init().expect("iniiii");
