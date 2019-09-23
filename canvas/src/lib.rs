@@ -1,14 +1,18 @@
 use embedded_graphics::prelude::*;
+use embedded_graphics::primitives::Circle;
+// use embedded_graphics::co
 
+#[derive(Clone,Copy)]
 pub struct Char {
-    x: u32,
-    y: u32
+    x: i32,
+    y: i32,
 }
 
+#[derive(Clone, Copy)]
 pub struct Canvas {
-    width: u32,
-    height: u32,
-    character: Char
+    width: i32,
+    height: i32,
+    character: Char,
 }
 
 impl Canvas {
@@ -16,13 +20,16 @@ impl Canvas {
         Canvas {
             width: 128,
             height: 64,
-            character: Char {
-                x: 30, 
-                y: 30
-            }
+            character: Char { x: 30, y: 30 },
         }
     }
-    pub fn draw_char() {
+    pub fn draw_char<C, D>(&self, mut drawing: D)
+    where
+        C: PixelColor,
+        D: Drawing<C>,
+    {
         // let a = 1;
+        let d = Circle::new(Coord::new(self.character.x, self.character.y), 2);
+        drawing.draw(d.into_iter());
     }
 }

@@ -123,6 +123,7 @@ dependencies = [
 name = "main-oled"
 version = "0.1.0"
 dependencies = [
+ "canvas 0.1.0",
  "embedded-graphics 0.4.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "embedded-hal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "key-event 0.1.0",

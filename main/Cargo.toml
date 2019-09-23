@@ -11,6 +11,7 @@ linux-embedded-hal = {version= "0.2.2"}
 random-pos = { path = "../random-pos"}
 spidev-sh1106 = { path = "../spidev-sh1106"}
 key-event = { path = "../key-event"}
+canvas = { path = "../canvas"}
 rppal = { version = "0.11.3", features = ["hal"] }
 
 
