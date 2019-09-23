@@ -28,9 +28,7 @@ where
             let kk = Keymap::new();
             let setting = kk.get_setting(*pid).expect("invalid pin");
             let name = String::from(&setting.name);
-            // p.set_interrupt(Trigger::Both).expect("set interrupt");
             p.set_async_interrupt(setting.trigger, move |lv| {
-                // let name = "".to_string();
                 key_event(name.to_string(), lv as i8);
             })
             .expect("invalid set async interrupt");
@@ -42,10 +40,8 @@ where
 
 pub fn hook_keyevent<C>(key_event: C)
 where
-    C: FnMut(String, i8) + Send + 'static + Copy, //FnMut(String, i8) + Send + 'static,
+    C: FnMut(String, i8) + Send + 'static + Copy,
 {
-    // loop {
     let pins = get_pins(key_event);
-    // let keymap = Keymap::new();
     loop {}
 }
