@@ -7,6 +7,10 @@ use random_pos::random;
 use sh1106::prelude::*;
 use spidev_sh1106::SpidevSH1106;
 
+use embedded_graphics::fonts::Font12x16;
+use embedded_graphics::prelude::*;
+// use embedded_graphics::text_12x16;
+
 fn main() {
     spi2();
 }
@@ -31,10 +35,12 @@ fn spi2() {
     let event_cb = |name: String, lv: i8| {
         println!("{:?} {:?}", name, lv);
         let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+        let f = Font12x16::render_str(name.as_str());
+        disp.draw(f.into_iter());
         // disp.init().expect("iniiii");
-        for _ in 0..10 {
-            SpidevSH1106::draw_random(&mut disp);
-        }
+        // for _ in 0..10 {
+        //     // SpidevSH1106::draw_random(&mut disp);
+        // }
         disp.flush().expect("fllll");
     };
     println!("hook");
