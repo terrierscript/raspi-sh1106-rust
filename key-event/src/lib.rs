@@ -49,8 +49,9 @@ where
         // p.input_pin.set_async_interrupt(Trigger::Both, key_event);
         p.input_pin
             .set_async_interrupt(Trigger::Both, move |lv| {
+                println!("{:?} press", name.clone());
                 //     // let int_lv:u8 = lv.into();
-                //     // println!("press {:?} {:?} {:?} ", name, pin_id, lv)
+                println!("press {:?} {:?} {:?} ", name, pin_id, lv)
                 key_event(name.clone(), lv as i8)
             })
             .expect("failed set interrupt");
