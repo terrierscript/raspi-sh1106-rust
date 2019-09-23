@@ -3,6 +3,7 @@ extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
 // use rppal::gpio::{Gpio, InputPin, Trigger};
+// use key_event::hook_keyevent_test;
 use random_pos::random;
 // use sh1106::interface::DisplayInterface;
 use sh1106::prelude::*;
@@ -18,7 +19,7 @@ fn main() {
     spi2();
 }
 
-fn spi2() -> ! {
+fn spi2() {
     // let sd = SpidevSH1106::new();
     let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
     SpidevSH1106::reset(&mut disp).expect("cannot reset");
@@ -36,10 +37,10 @@ fn spi2() -> ! {
     disp.flush().expect("cannot flushed");
     // let b = Rc::new(disp);
     // set_keys();
-    let event_cb = move |name: String, lv: i8| {
+    let event_cb = |name: String, lv: i8| {
         println!("{:?} {:?}", name, lv);
-        // let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
-        // SpidevSH1106::draw_random(&mut disp);
+        let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+        SpidevSH1106::draw_random(&mut disp);
         // b;
         // b.as_ref().set_pixel(random(128), random(64), 1)
         // render_dot(&mut disp);
@@ -48,13 +49,14 @@ fn spi2() -> ! {
         // }
     };
     println!("hook");
+    // hook_keyevent_test(event_cb);
     hook_keyevent(event_cb);
     // hook_keyevent(| | -> { //TOOD
     // //     println!("{:?} {:?}",  lv);
     // //     // if lv === HIGH
     // });
     println!("end");
-    loop {}
+    // loop {}
 }
 
 // fn render_dot<T>(disp: &mut GraphicsMode<T>)
