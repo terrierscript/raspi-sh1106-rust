@@ -12,19 +12,17 @@ use random_pos::random;
 
 use sh1106::builder::NoOutputPin;
 use sh1106::interface::DisplayInterface;
-use sh1106::mode::displaymode::DisplayModeTrait;
+// use sh1106::mode::displaymode::DisplayModeTrait;
 use sh1106::mode::GraphicsMode;
 use sh1106::prelude::*;
-use sh1106::properties::DisplayProperties;
+// use sh1106::properties::DisplayProperties;
 use sh1106::Builder;
 use sh1106::Error;
-use std::boxed::Box;
-use std::rc::Rc;
-// use crate::generator::Generator;
-// extern crate generator;
-// use std::
-// use intf::DevIntf;
-pub mod intf;
+// use std::boxed::Box;
+// use std::rc::Rc;
+
+
+mod display;
 mod generator;
 use generator::Generator;
 
@@ -62,8 +60,9 @@ impl SpidevSH1106 {
 
     pub fn gen_display() -> GraphicsMode<SpidevInterface> {
         let d: GraphicsMode<_> = Builder::new()
+            .with_rotation(DisplayRotation::Rotate180)
+            .with_size(DisplaySize::Display128x64)
             .connect_spi(Generator::setup_spi(), Generator::dc_pin())
-            // .connect_spi(self.spidev, self.dc_pin)
             .into();
         return d;
     }
