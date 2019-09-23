@@ -4,7 +4,7 @@ extern crate sh1106;
 
 use canvas::Canvas;
 use key_event::hook_keyevent;
-use key_event::keyenum::KeyEnum;
+use keyenum::KeyEnum;
 use random_pos::random;
 use sh1106::prelude::*;
 use spidev_sh1106::display::Display;
@@ -38,7 +38,7 @@ fn spi2() {
     let event_cb = move |pin: u8| {
         println!("{:?}", pin);
         let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
-        let keyenum = key_event::keyenum::from_u8(pin).expect("invalid pin");
+        let keyenum = keyenum::from_u8(pin).expect("invalid pin");
         let cnv2 = cnv.move_char(keyenum);
         let d = &mut cnv2.draw_char(disp);
         d.flush().expect("fllll");

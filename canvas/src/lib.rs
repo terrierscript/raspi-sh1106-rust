@@ -1,14 +1,16 @@
-use embedded_graphics::drawable::Pixel;
+// use embedded_graphics::drawable::Pixel;
 use embedded_graphics::pixelcolor::PixelColorU8;
 use embedded_graphics::prelude::*;
-use embedded_graphics::primitives::Circle;
+// use embedded_graphics::primitives::Circle;
 use embedded_graphics::primitives::Rect;
 // use embedded_graphics::co
-use embedded_graphics::fonts::Font12x16;
-use key_event::keyenum::KeyEnum;
+// use embedded_graphics::fonts::Font12x16;
+use keyenum::KeyEnum;
+// use std::clone::AssertParamIsClone;
+// use std::clone::Clone::clone;
 
 #[derive(Clone, Copy, Debug)]
-pub struct Char {
+pub struct Character {
     x: i32,
     y: i32,
 }
@@ -17,7 +19,7 @@ pub struct Char {
 pub struct Canvas {
     width: i32,
     height: i32,
-    character: Char,
+    character: Character,
 }
 
 impl Canvas {
@@ -26,20 +28,35 @@ impl Canvas {
         Canvas {
             width: 128,
             height: 64,
-            character: Char { x: 30, y: 30 },
+            character: Character { x: 30, y: 30 },
         }
     }
 
     pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
-        let pad = 2;
+        let pad = 4;
         println!("{:?}", self);
-        match key {
-            KeyEnum::KEY_UP_PIN => self.character.y = self.character.y - pad,
-            KeyEnum::KEY_DOWN_PIN => self.character.y = self.character.y + pad,
-            KeyEnum::KEY_LEFT_PIN => self.character.x = self.character.x - pad,
-            KeyEnum::KEY_RIGHT_PIN => self.character.x = self.character.x + pad,
+        self.character = match key {
+            KeyEnum::KEY_UP_PIN => Character {
+                x: &self.character.x + 0,
+                y: &self.character.y - pad,
+            },
+            KeyEnum::KEY_DOWN_PIN => Character {
+                x: &self.character.x + 0,
+                y: &self.character.y + pad,
+            },
+            KeyEnum::KEY_LEFT_PIN => Character {
+                x: &self.character.x - pad,
+                y: &self.character.y + 0,
+            },
+            KeyEnum::KEY_RIGHT_PIN => Character {
+                x: &self.character.x + pad,
+                y: &self.character.y + 0,
+            },
             // else => {}
-            _ => (),
+            _ => Character {
+                x: &self.character.x + 0,
+                y: &self.character.y + 0,
+            },
         };
         return self;
     }
@@ -48,11 +65,11 @@ impl Canvas {
         D: Drawing<PixelColorU8>,
         // C: PixelColor + Clone,
     {
-        let c = self.character;
+        let c = &self.character;
         // let a = 1;
         // let fill = Some(PixelColorU8::from(1));
         // let fill2 = Some(Pixel);
-        let p = 2;
+        let p = 4;
         let z: Rect<PixelColorU8> = Rect::new(
             Coord::new(c.x - p, c.y - p),
             Coord::new(c.x + p, c.y + p),
@@ -63,5 +80,25 @@ impl Canvas {
         // let f = Font12x16::render_str("hello");
         drawable.draw(z.into_iter());
         return drawable;
+    }
+}
+
+mod test {
+    use keyenum::KeyEnum;
+
+    #[test]
+    fn test_move_char() {
+        let mut cnv = crate::Canvas::new();
+        println!("{:?}", cnv);
+        assert_eq!(cnv.character.x, 30);
+        assert_eq!(cnv.character.y, 30);
+        cnv.move_char(KeyEnum::KEY_RIGHT_PIN);
+        assert_eq!(cnv.character.x, 34);
+        assert_eq!(cnv.character.y, 30);
+        cnv.move_char(KeyEnum::KEY_DOWN_PIN);
+        assert_eq!(cnv.character.x, 34);
+        assert_eq!(cnv.character.y, 34);
+        // assert_eq!(cnv.character.x, 30);
+        println!("{:?}", cnv);
     }
 }

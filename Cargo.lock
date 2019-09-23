@@ -30,7 +30,7 @@ name = "canvas"
 version = "0.1.0"
 dependencies = [
  "embedded-graphics 0.4.9 (registry+https://github.com/rust-lang/crates.io-index)",
- "key-event 0.1.0",
+ "keyenum 0.1.0",
 ]
 
 [[package]]
@@ -94,10 +94,16 @@ dependencies = [
 name = "key-event"
 version = "0.1.0"
 dependencies = [
- "num-derive 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "num-traits 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "rppal 0.11.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "sh1106 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "keyenum"
+version = "0.1.0"
+dependencies = [
+ "num-derive 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num-traits 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -130,6 +136,7 @@ dependencies = [
  "embedded-graphics 0.4.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "embedded-hal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "key-event 0.1.0",
+ "keyenum 0.1.0",
  "linux-embedded-hal 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "random-pos 0.1.0",
  "rppal 0.11.3 (registry+https://github.com/rust-lang/crates.io-index)",

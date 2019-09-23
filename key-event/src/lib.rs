@@ -5,7 +5,6 @@ use rppal::gpio::{Gpio, InputPin, Trigger};
 
 // use std::borrow::Borrow;
 // use std::collections::HashMap;
-pub mod keyenum;
 mod keymap;
 use crate::keymap::Keymap;
 

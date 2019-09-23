@@ -3,6 +3,7 @@ members = [
   "main",
   "spidev-sh1106",
   "key-event",
+  "keyenum",
   "random-pos",
   "canvas",
 ]
