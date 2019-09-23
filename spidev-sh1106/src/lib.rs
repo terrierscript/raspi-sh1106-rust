@@ -20,11 +20,15 @@ use sh1106::Builder;
 use sh1106::Error;
 use std::boxed::Box;
 use std::rc::Rc;
+// use crate::generator::Generator;
+// extern crate generator;
 // use std::
 // use intf::DevIntf;
 pub mod intf;
+mod generator;
+use generator::Generator;
 
-type SpidevInterface = SpiInterface<Spidev, Pin, NoOutputPin>;
+pub type SpidevInterface = SpiInterface<Spidev, Pin, NoOutputPin>;
 
 pub struct SpidevSH1106 {
     pub spidev: Spidev,
@@ -34,44 +38,18 @@ pub struct SpidevSH1106 {
 impl SpidevSH1106 {
     pub fn new() -> Self {
         SpidevSH1106 {
-            spidev: SpidevSH1106::setup_spi(),
-            dc_pin: SpidevSH1106::dc_pin(),
+            spidev: Generator::setup_spi(),
+            dc_pin: Generator::dc_pin(),
         }
-    }
-
-    fn dc_pin() -> Pin {
-        let dc = Pin::new(24);
-        dc.export().expect("cannnot export dc pin");
-        while !dc.is_exported() {}
-        dc.set_direction(Direction::Out)
-            .expect("DC: cannot set out direction");
-        return dc;
-    }
-
-    fn reset_pin() -> Pin {
-        let reset = Pin::new(25);
-        reset.export().expect("reset pin unwrap failed");
-        while !reset.is_exported() {}
-        reset
-            .set_direction(Direction::Out)
-            .expect("reset direction failed");
-        return reset;
     }
 
     pub fn reset<DI>(disp: &mut GraphicsMode<DI>) -> Result<(), Error<(), ()>>
     where
         DI: DisplayInterface,
     {
-        let mut rpin = Self::reset_pin();
+        let mut rpin = Generator::reset_pin();
         let mut delay = Delay {};
         return disp.reset(&mut rpin, &mut delay);
-    }
-
-    fn setup_spi() -> Spidev {
-        let mut spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
-        let options = SpidevOptions::new().max_speed_hz(2_000_000).build();
-        spi.configure(&options).expect("SPI configure error");
-        return spi;
     }
 
     pub fn draw_random<DI>(disp: &mut GraphicsMode<DI>)
@@ -84,7 +62,7 @@ impl SpidevSH1106 {
 
     pub fn gen_display() -> GraphicsMode<SpidevInterface> {
         let d: GraphicsMode<_> = Builder::new()
-            .connect_spi(SpidevSH1106::setup_spi(), SpidevSH1106::dc_pin())
+            .connect_spi(Generator::setup_spi(), Generator::dc_pin())
             // .connect_spi(self.spidev, self.dc_pin)
             .into();
         return d;
