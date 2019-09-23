@@ -93,16 +93,8 @@ dependencies = [
 name = "key-event"
 version = "0.1.0"
 dependencies = [
- "keymap 0.1.0",
  "rppal 0.11.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "sh1106 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "keymap"
-version = "0.1.0"
-dependencies = [
- "embedded-hal 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

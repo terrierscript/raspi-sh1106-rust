@@ -1,5 +1,3 @@
-#[no_std]
-#[no_main]
 extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
