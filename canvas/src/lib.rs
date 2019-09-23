@@ -1,5 +1,7 @@
+use embedded_graphics::pixelcolor::PixelColorU8;
 use embedded_graphics::prelude::*;
 use embedded_graphics::primitives::Circle;
+use embedded_graphics::drawable::Pixel;
 // use embedded_graphics::co
 
 #[derive(Clone,Copy)]
@@ -23,13 +25,10 @@ impl Canvas {
             character: Char { x: 30, y: 30 },
         }
     }
-    pub fn draw_char<C, D>(&self, mut drawing: D)
-    where
-        C: PixelColor,
-        D: Drawing<C>,
+    pub fn draw_char(&self) -> dyn Iterator<Item = Pixel<PixelColorU8>>
     {
         // let a = 1;
         let d = Circle::new(Coord::new(self.character.x, self.character.y), 2);
-        drawing.draw(d.into_iter());
+        d.into_iter()
     }
 }
