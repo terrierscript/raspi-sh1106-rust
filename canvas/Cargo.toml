@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 embedded-graphics = "0.4.9"
+key-event = { path = "../key-event"}
