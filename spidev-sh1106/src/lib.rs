@@ -58,12 +58,6 @@ impl SpidevSH1106 {
         return reset;
     }
 
-    // pub fn generate_display<DI, CommE>(&self) -> GraphicsMode<DI> where
-    //     DI: DisplayInterface<Error=CommE>
-    // {
-    //     return Builder::new().connect_spi(self.spidev, self.dc)
-    // }
-
     pub fn reset<DI>(disp: &mut GraphicsMode<DI>) -> Result<(), Error<(), ()>>
     where
         DI: DisplayInterface,
@@ -87,36 +81,8 @@ impl SpidevSH1106 {
     {
         disp.set_pixel(random(128), random(64), 1);
     }
-}
 
-// impl intf::DevIntf for SpidevSH1106 {
-//     fn generate_display<DI>(&self) -> GraphicsMode<DI>
-//     where DI: DisplayInterface{
-//         let d : GraphicsMode<_> = Builder::new().connect_spi(
-//             SpidevSH1106::setup_spi(),
-//             SpidevSH1106::dc_pin()
-//         ).into();
-//         return d;
-//     }
-// }
-
-pub trait MyDisplayModeTrait<DI> {
-    /// Allocate all required data and initialise display for mode
-    // pub fn new() -> Self;
-    fn new(properties: DisplayProperties<DI>) -> Self;
-
-    /// Release resources for reuse with different mode
-    fn release(self) -> DisplayProperties<DI>;
-}
-
-// pub struct SpidevSH1106Display {
-//     // display: MyDisplayModeTrait<dyn DisplayInterface<Error = CommE>>,
-// }
-
-impl SpidevSH1106 {
-    // pub fn gen() -> Box<GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>>>
-    // pub fn gen() -> GraphicsMode<SpiInterface<Spidev, Pin, NoOutputPin>> {
-    pub fn gen_display(&self) -> GraphicsMode<SpidevInterface> {
+    pub fn gen_display() -> GraphicsMode<SpidevInterface> {
         let d: GraphicsMode<_> = Builder::new()
             .connect_spi(SpidevSH1106::setup_spi(), SpidevSH1106::dc_pin())
             // .connect_spi(self.spidev, self.dc_pin)

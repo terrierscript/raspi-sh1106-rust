@@ -44,11 +44,7 @@ fn spi2() {
         for _ in 0..10 {
             SpidevSH1106::draw_random(&mut disp);
         }
-        // b;
-        // b.as_ref().set_pixel(random(128), random(64), 1)
-        // render_dot(&mut disp);
-        //     disp.set_pixel(random(128), random(64), 1);
-        // }
+        disp.flush();
     };
     println!("hook");
     // hook_keyevent_test(event_cb);

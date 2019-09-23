@@ -1,7 +1,7 @@
 // use embedded_hal::digital::v2::InputPin;
 use std::collections::HashMap;
 // use std::borrow::Borrow;
-
+#[derive(Clone)]
 pub struct Keymap {
     map: HashMap<u8, &'static str>,
 }

@@ -13,7 +13,7 @@ pub struct Pins {
     pub input_pin: InputPin,
     pub name: String,
 }
-pub fn get_pins<C>(mut key_event: C) -> Vec<Pins>
+pub fn get_pins<C>(mut key_event: C) -> Vec<InputPin>
 where
     C: FnMut(String, i8) + Send + 'static + Copy,
 {
@@ -24,29 +24,33 @@ where
         .into_iter()
         .map(move |pid| {
             let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
+            let kk = Keymap::new();
+            let name = kk.get_name(*pid).expect("invalid pin");
             p.set_interrupt(Trigger::Both).expect("set interrupt");
             p.set_async_interrupt(Trigger::Both, move |lv| {
+                // let name = "a";
                 // println!("aaa");
                 // cb();
-                // let name = keymap.get_name(*pid).expect("invalid pin");
-
-                key_event("name".to_string(), lv as i8);
+                // TOOD
+                // let name = kk.get_name(*pid).expect("invalid pin");
+                key_event(name.to_string(), lv as i8);
             })
             .expect("invalid set async interrupt");
             p
         })
         .collect();
-    pins.into_iter()
-        .map(|p| {
-            let pin_id = p.pin();
-            let name = keymap.get_name(pin_id).expect("invalid pin");
+    pins
+    // pins.into_iter()
+    //     .map(|p| {
+    //         let pin_id = p.pin();
+    //         let name = keymap.get_name(pin_id).expect("invalid pin");
 
-            Pins {
-                input_pin: p,
-                name: name,
-            }
-        })
-        .collect()
+    //         Pins {
+    //             input_pin: p,
+    //             name: name,
+    //         }
+    //     })
+    //     .collect()
 }
 
 // type EventFn = Fn(String, i8) -> ();
@@ -73,22 +77,4 @@ where
     let pins = get_pins(key_event);
     // let keymap = Keymap::new();
     loop {}
-    //     for mut p in pins.into_iter() {
-    //         let pin_id = p.input_pin.pin();
-    //         let name = keymap.get_name(pin_id).expect("invalid pin");
-    //         // p.input_pin.set_async_interrupt(Trigger::Both, key_event);
-    //         // p.input_pin.set_interrupt(Trigger::Both).expect("p");
-    //         // p.input_pin
-    //         //     .set_interrupt(Trigger::Both)
-    //         //     .expect("set interrupt");
-    //         p.input_pin
-    //             .set_async_interrupt(Trigger::Both, move |lv| {
-    //                 println!("{:?} press", name.clone());
-    //                 //     // let int_lv:u8 = lv.into();
-    //                 println!("press {:?} {:?} {:?} ", name, pin_id, lv);
-    //                 // key_event(name.clone(), lv as i8);
-    //             })
-    //             .expect("failed set interrupt");
-    //     }
-    // }
 }
