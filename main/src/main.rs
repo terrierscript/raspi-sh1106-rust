@@ -35,15 +35,17 @@ fn spi2() {
     disp.flush().expect("cannot flushed");
     // let b = Rc::new(disp);
     // set_keys();
-    let event_cb = move |pin: u8| {
-        println!("{:?}", pin);
-        let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
-        let keyenum = keyenum::from_u8(pin).expect("invalid pin");
-        let cnv2 = cnv.move_char(keyenum);
-        let d = &mut cnv2.draw_char(disp);
-        d.flush().expect("fllll");
-    };
+    hook_keyevent(
+        // let event_cb =
+        move |pin: u8| {
+            println!("{:?}", pin);
+            let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+            let keyenum = keyenum::from_u8(pin).expect("invalid pin");
+            let cnv2 = cnv.move_char(keyenum);
+            let d = &mut cnv2.draw_char(disp);
+            d.flush().expect("fllll");
+        }, // event_cb
+    );
     println!("hook");
-    hook_keyevent(event_cb);
     println!("end");
 }
