@@ -9,17 +9,17 @@ use keyenum::KeyEnum;
 // use std::clone::AssertParamIsClone;
 // use std::clone::Clone::clone;
 
-#[derive(Clone, Copy, Debug)]
+#[derive( Debug)]
 pub struct Character {
     x: i32,
     y: i32,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Debug)]
 pub struct Canvas {
     width: i32,
     height: i32,
-    character: Character,
+    character: Character
 }
 
 impl Canvas {
@@ -28,7 +28,7 @@ impl Canvas {
         Canvas {
             width: 128,
             height: 64,
-            character: Character { x: 30, y: 30 },
+            character: Character { x: 30, y: 30 }
         }
     }
 
@@ -36,19 +36,19 @@ impl Canvas {
         let pad = 4;
         println!("{:?}", self);
         self.character = match key {
-            KeyEnum::KEY_UP_PIN => Character {
+            KeyEnum::KeyUpPin => Character {
                 x: &self.character.x + 0,
                 y: &self.character.y - pad,
             },
-            KeyEnum::KEY_DOWN_PIN => Character {
+            KeyEnum::KeyDownPin => Character {
                 x: &self.character.x + 0,
                 y: &self.character.y + pad,
             },
-            KeyEnum::KEY_LEFT_PIN => Character {
+            KeyEnum::KeyLeftPin => Character {
                 x: &self.character.x - pad,
                 y: &self.character.y + 0,
             },
-            KeyEnum::KEY_RIGHT_PIN => Character {
+            KeyEnum::KeyRightPin => Character {
                 x: &self.character.x + pad,
                 y: &self.character.y + 0,
             },
@@ -92,10 +92,10 @@ mod test {
         println!("{:?}", cnv);
         assert_eq!(cnv.character.x, 30);
         assert_eq!(cnv.character.y, 30);
-        cnv.move_char(KeyEnum::KEY_RIGHT_PIN);
+        cnv.move_char(KeyEnum::KeyRightPin);
         assert_eq!(cnv.character.x, 34);
         assert_eq!(cnv.character.y, 30);
-        cnv.move_char(KeyEnum::KEY_DOWN_PIN);
+        cnv.move_char(KeyEnum::KeyDownPin);
         assert_eq!(cnv.character.x, 34);
         assert_eq!(cnv.character.y, 34);
         // assert_eq!(cnv.character.x, 30);

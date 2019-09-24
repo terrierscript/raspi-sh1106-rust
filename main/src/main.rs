@@ -4,7 +4,7 @@ extern crate sh1106;
 
 use canvas::Canvas;
 use key_event::hook_keyevent;
-use keyenum::KeyEnum;
+
 use random_pos::random;
 use sh1106::prelude::*;
 use spidev_sh1106::display::Display;
@@ -20,7 +20,7 @@ fn spi2() {
     let d = Display::new();
     // let dd = d.gen_display();
     // let sd = SpidevSH1106::new();
-    let mut cnv = Canvas::new();
+    let mut cnv : Mutex<Canvas> = Mutex::new(Canvas::new());
     let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
     SpidevSH1106::reset(&mut disp).expect("cannot reset");
 

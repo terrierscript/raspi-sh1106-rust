@@ -66,25 +66,26 @@ where
         .collect();
     // pins
 }
-pub fn pin_to_pin<'a>() -> &'static [&'a InputPin]{
-    // gpio.poll_interrupts(pins: &[&'a InputPin], reset: bool, timeout: Option<Duration>)
+
+// pub fn pin_to_pin<'a>() -> &'static [&'a InputPin]{
+//     // gpio.poll_interrupts(pins: &[&'a InputPin], reset: bool, timeout: Option<Duration>)
     
-    let ff = || {
-        // key_event()
-    };
-    let gpio = Gpio::new().expect("Failed Gpio::new");
-    let keymap = Keymap::new();
-    let pins: Vec<_> = keymap
-        .keys()
-        .into_iter()
-        .map(move |pid| {
-            let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
-            &p
-        })
-        .collect();
-    // let pp : Vec<InputPin> = pins.map(|p| &p).collect();
-    return pins.as_slice();
-}
+//     let ff = || {
+//         // key_event()
+//     };
+//     let gpio = Gpio::new().expect("Failed Gpio::new");
+//     let keymap = Keymap::new();
+//     let pins: Vec<_> = keymap
+//         .keys()
+//         .into_iter()
+//         .map(move |pid| {
+//             let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
+//             &p
+//         })
+//         .collect();
+//     // let pp : Vec<InputPin> = pins.map(|p| &p).collect();
+//     return pins.as_slice();
+// }
 
 // pub fn hook_keyevent<C>(key_event: C)
 // where
