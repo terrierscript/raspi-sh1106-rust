@@ -2,6 +2,7 @@ extern crate embedded_graphics;
 extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
+use std::sync::Mutex;
 use canvas::Canvas;
 use key_event::hook_keyevent;
 
@@ -21,8 +22,9 @@ fn spi2() {
     // let dd = d.gen_display();
     // let sd = SpidevSH1106::new();
     let mut cnv : Mutex<Canvas> = Mutex::new(Canvas::new());
-    let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+    let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();    
     SpidevSH1106::reset(&mut disp).expect("cannot reset");
+    
 
     disp.init().expect("not initialized");
     disp.flush().expect("not flushed");
@@ -33,17 +35,24 @@ fn spi2() {
     }
 
     disp.flush().expect("cannot flushed");
+    let dispMutex = Mutex::new(disp);
     // let b = Rc::new(disp);
     // set_keys();
     hook_keyevent(
         // let event_cb =
-        move |pin: u8| {
-            println!("{:?}", pin);
-            let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
-            let keyenum = keyenum::from_u8(pin).expect("invalid pin");
-            let cnv2 = cnv.move_char(keyenum);
-            let d = &mut cnv2.draw_char(disp);
-            d.flush().expect("fllll");
+         move |pin: u8| {
+            let mut lock = cnv.try_lock();
+            let mut lock2 = dispMutex.try_lock();
+            if let Ok(ref mut canvas) = lock {
+            if let Ok(ref mut disp) = lock2 {
+                    println!("{:?}", pin);
+                    let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+                    let keyenum = keyenum::from_u8(pin).expect("invalid pin");
+                    canvas.move_char(keyenum);
+                    let d2 = canvas.draw_char(disp);
+                    d2.flush().expect("fllll");
+                }
+            }
         }, // event_cb
     );
     println!("hook");

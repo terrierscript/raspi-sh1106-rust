@@ -14,7 +14,7 @@ pub struct Pins {
 }
 pub fn hook_keyevent<C>(mut key_event: C) -> Vec<InputPin>
 where
-    C: FnMut(u8) + Send + 'static + Copy,
+    C: FnMut(u8) + Send + 'static,
 {
     let gpio = Gpio::new().expect("Failed Gpio::new");
     let keymap = Keymap::new();
