@@ -14,5 +14,5 @@ pub enum KeyEnum {
 }
 
 pub fn from_u8(num: u8) -> Option<KeyEnum> {
-    return FromPrimitive::from_u8(num);
+    FromPrimitive::from_u8(num)
 }
