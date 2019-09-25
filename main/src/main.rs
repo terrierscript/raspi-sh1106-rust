@@ -16,9 +16,8 @@ fn main() {
 fn spi2() {
     let mut canvas = Canvas::new();
     let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
-    
+
     SpidevSH1106::reset(&mut disp).expect("cannot reset");
-    
 
     disp.init().expect("not initialized");
     disp.flush().expect("not flushed");
@@ -28,15 +27,13 @@ fn spi2() {
         disp.set_pixel(random(128), random(64), 1);
     }
 
-    hook_keyevent(
-         move |pin: u8| {
-            let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
-            let keyenum = keyenum::from_u8(pin).expect("invalid pin");
-            canvas.move_char(keyenum);
-            let mut d2 = canvas.draw_char(disp);
-            d2.flush().expect("fllll");
-        }
-    );
+    hook_keyevent(move |pin: u8| {
+        let disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+        let keyenum = keyenum::from_u8(pin).expect("invalid pin");
+        canvas.move_char(keyenum);
+        let mut d2 = canvas.draw_char(disp);
+        d2.flush().expect("fllll");
+    });
     println!("hook");
     println!("end");
 }

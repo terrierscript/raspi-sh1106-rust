@@ -19,7 +19,6 @@ use sh1106::Error;
 // use std::boxed::Box;
 // use std::rc::Rc;
 
-
 pub mod display;
 mod generator;
 use generator::Generator;

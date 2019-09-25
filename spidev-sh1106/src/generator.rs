@@ -1,4 +1,3 @@
-
 use hal::spidev::SpidevOptions;
 use hal::sysfs_gpio::Direction;
 use hal::Pin;
@@ -7,7 +6,6 @@ use hal::Spidev;
 pub struct Generator {}
 
 impl Generator {
-
     pub fn dc_pin() -> Pin {
         let dc = Pin::new(24);
         dc.export().expect("cannnot export dc pin");
@@ -33,5 +31,4 @@ impl Generator {
         spi.configure(&options).expect("SPI configure error");
         return spi;
     }
-
 }

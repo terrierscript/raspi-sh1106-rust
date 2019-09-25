@@ -1,4 +1,3 @@
-
 pub struct SpidevSH1106Ref<'a> {
     pub spidev: &'a Spidev,
     pub dc_pin: &'a Pin,

@@ -9,7 +9,7 @@ use keyenum::KeyEnum;
 // use std::clone::AssertParamIsClone;
 // use std::clone::Clone::clone;
 
-#[derive( Debug)]
+#[derive(Debug)]
 pub struct Character {
     x: i32,
     y: i32,
@@ -19,7 +19,7 @@ pub struct Character {
 pub struct Canvas {
     width: i32,
     height: i32,
-    character: Character
+    character: Character,
 }
 
 impl Canvas {
@@ -28,7 +28,7 @@ impl Canvas {
         Canvas {
             width: 128,
             height: 64,
-            character: Character { x: 30, y: 30 }
+            character: Character { x: 30, y: 30 },
         }
     }
 

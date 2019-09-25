@@ -14,7 +14,7 @@ pub struct Pins {
     pub input_pin: InputPin,
     pub name: String,
 }
-pub fn hook_keyevent<C>(mut key_event: C) 
+pub fn hook_keyevent<C>(mut key_event: C)
 where
     C: FnMut(u8) + Send + 'static,
 {
@@ -38,11 +38,13 @@ where
             p
         })
         .collect();
-    loop{
-        rx.try_recv().and_then(|r| {
-            // println!("{:?}",r);
-            key_event(r);
-            Ok(r)
-        }).ok();
+    loop {
+        rx.try_recv()
+            .and_then(|r| {
+                // println!("{:?}",r);
+                key_event(r);
+                Ok(r)
+            })
+            .ok();
     }
 }

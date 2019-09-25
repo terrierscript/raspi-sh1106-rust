@@ -1,6 +1,6 @@
 // use embedded_hal::digital::v2::InputPin;
-use std::collections::HashMap;
 use rppal::gpio::Trigger;
+use std::collections::HashMap;
 
 // use std::borrow::Borrow;
 #[derive(Clone)]
@@ -9,28 +9,31 @@ pub struct Keymap {
 }
 
 #[derive(Clone, Debug)]
-pub struct KeySetting{
-    pub name: String, 
-    pub trigger: Trigger
+pub struct KeySetting {
+    pub name: String,
+    pub trigger: Trigger,
 }
 
 fn get_keymap() -> HashMap<u8, KeySetting> {
-    let hm: HashMap<_,_> = vec![
-        (6,  "KEY_UP_PIN".to_string()   ,Trigger::FallingEdge),
-        (19, "KEY_DOWN_PIN".to_string() ,Trigger::FallingEdge),
-        (5,  "KEY_LEFT_PIN".to_string() ,Trigger::FallingEdge),
-        (26, "KEY_RIGHT_PIN".to_string()    ,Trigger::FallingEdge),
-        (13, "KEY_PRESS_PIN".to_string()    ,Trigger::RisingEdge),
-        (21, "KEY1_PIN".to_string() ,Trigger::RisingEdge),
-        (20, "KEY2_PIN".to_string() ,Trigger::RisingEdge),
-        (16, "KEY3_PIN".to_string() ,Trigger::RisingEdge),
+    let hm: HashMap<_, _> = vec![
+        (6, "KEY_UP_PIN".to_string(), Trigger::FallingEdge),
+        (19, "KEY_DOWN_PIN".to_string(), Trigger::FallingEdge),
+        (5, "KEY_LEFT_PIN".to_string(), Trigger::FallingEdge),
+        (26, "KEY_RIGHT_PIN".to_string(), Trigger::FallingEdge),
+        (13, "KEY_PRESS_PIN".to_string(), Trigger::RisingEdge),
+        (21, "KEY1_PIN".to_string(), Trigger::RisingEdge),
+        (20, "KEY2_PIN".to_string(), Trigger::RisingEdge),
+        (16, "KEY3_PIN".to_string(), Trigger::RisingEdge),
     ]
     .into_iter()
     .map(|(k, name, trigger)| {
-        (k,KeySetting {
-            name: name,
-            trigger: trigger
-        })
+        (
+            k,
+            KeySetting {
+                name: name,
+                trigger: trigger,
+            },
+        )
     })
     // .cloned()
     .collect();
@@ -53,7 +56,6 @@ impl Keymap {
             None => None,
         }
     }
-
 }
 
 #[cfg(test)]
