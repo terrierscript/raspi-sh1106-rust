@@ -3,7 +3,7 @@ use crate::SpidevInterface;
 use crate::SpidevSH1106;
 use hal::Pin;
 use hal::Spidev;
-use sh1106::interface::DisplayInterface;
+// use sh1106::interface::DisplayInterface;
 use sh1106::mode::GraphicsMode;
 use sh1106::prelude::*;
 use sh1106::Builder;
@@ -23,8 +23,8 @@ impl Display {
 
         Display {
             device: sh,
-            spidev: spidev,
-            dc_pin: dc_pin, // disp: Self::gen_display(),
+            spidev,
+            dc_pin, // disp: Self::gen_display(),
         }
     }
     pub fn gen_display(self) -> GraphicsMode<SpidevInterface> {
@@ -34,7 +34,7 @@ impl Display {
             .connect_spi(self.device.spidev, self.device.dc_pin)
             // .connect_spi(self.spidev, self.dc_pin)
             .into();
-        return d;
+        d
     }
 }
 

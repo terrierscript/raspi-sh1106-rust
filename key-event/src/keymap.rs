@@ -36,7 +36,7 @@ impl Keymap {
     }
 
     pub fn get_setting(&self, pin: u8) -> Option<&Trigger> {
-         keyenum::from_u8(pin).map_or(None, |p| 
+         keyenum::from_u8(pin).and_then(|p| 
             self.map.get(&p).or(None)
         )
     }

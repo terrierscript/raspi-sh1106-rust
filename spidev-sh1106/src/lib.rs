@@ -1,8 +1,6 @@
 extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
-use hal::spidev::SpidevOptions;
-use hal::sysfs_gpio::Direction;
 use hal::Delay;
 use hal::Pin;
 use hal::Spidev;
@@ -10,14 +8,10 @@ use random_pos::random;
 
 use sh1106::builder::NoOutputPin;
 use sh1106::interface::DisplayInterface;
-// use sh1106::mode::displaymode::DisplayModeTrait;
 use sh1106::mode::GraphicsMode;
 use sh1106::prelude::*;
-// use sh1106::properties::DisplayProperties;
 use sh1106::Builder;
 use sh1106::Error;
-// use std::boxed::Box;
-// use std::rc::Rc;
 
 pub mod display;
 mod generator;
@@ -44,7 +38,7 @@ impl SpidevSH1106 {
     {
         let mut rpin = Generator::reset_pin();
         let mut delay = Delay {};
-        return disp.reset(&mut rpin, &mut delay);
+        disp.reset(&mut rpin, &mut delay)
     }
 
     pub fn draw_random<DI>(disp: &mut GraphicsMode<DI>)
@@ -61,6 +55,6 @@ impl SpidevSH1106 {
             .with_size(DisplaySize::Display128x64)
             .connect_spi(Generator::setup_spi(), Generator::dc_pin())
             .into();
-        return d;
+        d
     }
 }

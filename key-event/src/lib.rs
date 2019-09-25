@@ -3,8 +3,6 @@ extern crate sh1106;
 
 use rppal::gpio::{Gpio, InputPin};
 
-// use std::borrow::Borrow;
-// use std::collections::HashMap;
 mod keymap;
 use std::sync::mpsc::channel;
 

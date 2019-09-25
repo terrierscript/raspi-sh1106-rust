@@ -60,7 +60,7 @@ impl Canvas {
         )
         .with_fill(Some(PixelColorU8(1u8)));
         drawable.draw(z.into_iter());
-        return drawable;
+        drawable
     }
 }
 

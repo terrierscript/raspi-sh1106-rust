@@ -12,7 +12,7 @@ impl Generator {
         while !dc.is_exported() {}
         dc.set_direction(Direction::Out)
             .expect("DC: cannot set out direction");
-        return dc;
+        dc
     }
 
     pub fn reset_pin() -> Pin {
@@ -22,13 +22,13 @@ impl Generator {
         reset
             .set_direction(Direction::Out)
             .expect("reset direction failed");
-        return reset;
+        reset
     }
 
     pub fn setup_spi() -> Spidev {
         let mut spi = Spidev::open("/dev/spidev0.0").expect("spi failed");
         let options = SpidevOptions::new().max_speed_hz(2_000_000).build();
         spi.configure(&options).expect("SPI configure error");
-        return spi;
+        spi
     }
 }
