@@ -1,7 +1,7 @@
 use num_derive::FromPrimitive;
 use num_traits::FromPrimitive;
 
-#[derive(FromPrimitive)]
+#[derive(FromPrimitive, Clone, Copy, PartialEq, Eq,Hash)]
 pub enum KeyEnum {
     KeyUpPin = 6,
     KeyDownPin = 19,

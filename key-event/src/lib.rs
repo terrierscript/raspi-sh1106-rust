@@ -14,6 +14,7 @@ pub struct Pins {
     pub input_pin: InputPin,
     pub name: String,
 }
+
 pub fn hook_keyevent<C>(mut key_event: C)
 where
     C: FnMut(u8) + Send + 'static,
@@ -26,12 +27,12 @@ where
         .keys()
         .into_iter()
         .map(move |pid| {
-            let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
+            let mut p = gpio.get(*pid as u8).expect("get pin").into_input_pullup();
             let kk = Keymap::new();
-            let setting = kk.get_setting(*pid).expect("invalid pin");
+            let trigger = kk.get_setting(*pid as u8).expect("invalid pin");
             let pp = pid.clone();
             let tt = tx.clone();
-            p.set_async_interrupt(setting.trigger, move |lv| {
+            p.set_async_interrupt(*trigger, move |_lv| {
                 tt.send(pp).expect("send tx");
             })
             .expect("invalid set async interrupt");
@@ -39,12 +40,6 @@ where
         })
         .collect();
     loop {
-        rx.try_recv()
-            .and_then(|r| {
-                // println!("{:?}",r);
-                key_event(r);
-                Ok(r)
-            })
-            .ok();
+        rx.try_recv().map( |r| key_event(r as u8)).ok();
     }
 }

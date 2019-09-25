@@ -8,6 +8,8 @@ edition = "2018"
 
 [dependencies]
 rppal = { version = "0.11.3", features = ["hal"] }
+keyenum = { path = "../keyenum"}
+
 # spidev-sh1106 = { path = "../spidev-sh1106"}
 # keymap = { path = "../keymap"}
 sh1106 = "0.2.0"
