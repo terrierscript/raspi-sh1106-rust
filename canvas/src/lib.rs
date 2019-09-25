@@ -38,14 +38,15 @@ impl Canvas {
 
 
     pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
-        self.character = match key {
+        let c = match key {
             KeyEnum::KeyUpPin => self.character.immutalbe_move(0, -self.move_pad),
             KeyEnum::KeyDownPin => self.character.immutalbe_move(0, self.move_pad),
             KeyEnum::KeyLeftPin => self.character.immutalbe_move(-self.move_pad, 0),
             KeyEnum::KeyRightPin => self.character.immutalbe_move(self.move_pad, 0),
             _ => self.character.immutalbe_move(0, 0),
         };
-        return self;
+        self.character = c;
+        self
     }
     pub fn draw_char<D>(&self, mut drawable: D) -> D
     where
@@ -63,6 +64,11 @@ impl Canvas {
         drawable
     }
 }
+impl Default for Canvas {
+    fn default() -> Self{
+        Self::new()
+    }
+}
 
 mod test {
 
@@ -72,10 +78,10 @@ mod test {
         println!("{:?}", cnv);
         assert_eq!(cnv.character.x, 30);
         assert_eq!(cnv.character.y, 30);
-        cnv.move_char(KeyEnum::KeyRightPin);
+        cnv.move_char(keyenum::KeyEnum::KeyRightPin);
         assert_eq!(cnv.character.x, 34);
         assert_eq!(cnv.character.y, 30);
-        cnv.move_char(KeyEnum::KeyDownPin);
+        cnv.move_char(keyenum::KeyEnum::KeyDownPin);
         assert_eq!(cnv.character.x, 34);
         assert_eq!(cnv.character.y, 34);
         // assert_eq!(cnv.character.x, 30);
