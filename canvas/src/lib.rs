@@ -1,24 +1,27 @@
-// use embedded_graphics::drawable::Pixel;
 use embedded_graphics::pixelcolor::PixelColorU8;
 use embedded_graphics::prelude::*;
-// use embedded_graphics::primitives::Circle;
 use embedded_graphics::primitives::Rect;
-// use embedded_graphics::co
-// use embedded_graphics::fonts::Font12x16;
 use keyenum::KeyEnum;
-// use std::clone::AssertParamIsClone;
-// use std::clone::Clone::clone;
 
 #[derive(Debug)]
 pub struct Character {
     x: i32,
     y: i32,
 }
+impl Character {
+    fn immutalbe_move(&self, x: i32, y: i32) -> Character {
+        Character{
+            x: self.x + x,
+            y: self.y + y
+        }
+    }
+}
 
 #[derive(Debug)]
 pub struct Canvas {
     width: i32,
     height: i32,
+    move_pad: i32,
     character: Character,
 }
 
@@ -28,47 +31,27 @@ impl Canvas {
         Canvas {
             width: 128,
             height: 64,
+            move_pad: 4,
             character: Character { x: 30, y: 30 },
         }
     }
 
+
     pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
-        let pad = 4;
-        println!("{:?}", self);
         self.character = match key {
-            KeyEnum::KeyUpPin => Character {
-                x: &self.character.x + 0,
-                y: &self.character.y - pad,
-            },
-            KeyEnum::KeyDownPin => Character {
-                x: &self.character.x + 0,
-                y: &self.character.y + pad,
-            },
-            KeyEnum::KeyLeftPin => Character {
-                x: &self.character.x - pad,
-                y: &self.character.y + 0,
-            },
-            KeyEnum::KeyRightPin => Character {
-                x: &self.character.x + pad,
-                y: &self.character.y + 0,
-            },
-            // else => {}
-            _ => Character {
-                x: &self.character.x + 0,
-                y: &self.character.y + 0,
-            },
+            KeyEnum::KeyUpPin => self.character.immutalbe_move(0, -self.move_pad),
+            KeyEnum::KeyDownPin => self.character.immutalbe_move(0, self.move_pad),
+            KeyEnum::KeyLeftPin => self.character.immutalbe_move(-self.move_pad, 0),
+            KeyEnum::KeyRightPin => self.character.immutalbe_move(self.move_pad, 0),
+            _ => self.character.immutalbe_move(0, 0),
         };
         return self;
     }
     pub fn draw_char<D>(&self, mut drawable: D) -> D
     where
         D: Drawing<PixelColorU8>,
-        // C: PixelColor + Clone,
     {
         let c = &self.character;
-        // let a = 1;
-        // let fill = Some(PixelColorU8::from(1));
-        // let fill2 = Some(Pixel);
         let p = 4;
         let z: Rect<PixelColorU8> = Rect::new(
             Coord::new(c.x - p, c.y - p),
@@ -76,15 +59,12 @@ impl Canvas {
             // 1,
         )
         .with_fill(Some(PixelColorU8(1u8)));
-        // let d = Circle::new(Coord::new(self.character.x, self.character.y), 10);
-        // let f = Font12x16::render_str("hello");
         drawable.draw(z.into_iter());
         return drawable;
     }
 }
 
 mod test {
-    use keyenum::KeyEnum;
 
     #[test]
     fn test_move_char() {
