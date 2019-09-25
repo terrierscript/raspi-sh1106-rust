@@ -129,7 +129,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "main-oled"
+name = "main"
 version = "0.1.0"
 dependencies = [
  "canvas 0.1.0",

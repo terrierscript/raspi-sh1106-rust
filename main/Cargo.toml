@@ -1,5 +1,5 @@
 [package]
-name = "main-oled"
+name = "main"
 version = "0.1.0"
 authors = ["terrierscript <13282103+terrierscript@users.noreply.github.com>"]
 edition = "2018"
