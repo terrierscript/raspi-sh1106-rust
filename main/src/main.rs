@@ -2,6 +2,7 @@ extern crate embedded_graphics;
 extern crate linux_embedded_hal as hal;
 extern crate sh1106;
 
+use std::sync::mpsc::channel;
 use canvas::Canvas;
 use key_event::hook_keyevent;
 
@@ -20,8 +21,9 @@ fn spi2() {
     let d = Display::new();
     // let dd = d.gen_display();
     // let sd = SpidevSH1106::new();
-    let mut cnv : Mutex<Canvas> = Mutex::new(Canvas::new());
+    let mut cnv : Canvas = Canvas::new();
     let mut disp: GraphicsMode<_> = SpidevSH1106::gen_display();
+    let (tx, rx) = channel();
     SpidevSH1106::reset(&mut disp).expect("cannot reset");
 
     disp.init().expect("not initialized");
