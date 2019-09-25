@@ -1,48 +1,48 @@
 extern crate rppal;
 extern crate sh1106;
 
-use rppal::gpio::{Gpio, InputPin, Trigger};
+use rppal::gpio::{Gpio, InputPin};
 
 // use std::borrow::Borrow;
 // use std::collections::HashMap;
 mod keymap;
-use crate::keymap::Keymap;
+use std::sync::mpsc::channel;
 
-pub trait CallbackFn: FnMut(String, i8) + Send + 'static + Copy {}
+use crate::keymap::Keymap;
 
 pub struct Pins {
     pub input_pin: InputPin,
     pub name: String,
 }
-pub fn get_pins<C>(mut key_event: C) -> Vec<InputPin>
+pub fn hook_keyevent<C>(mut key_event: C) 
 where
-    C: FnMut(String, i8) + Send + 'static + Copy,
+    C: FnMut(u8) + Send + 'static,
 {
+    let (tx, rx) = channel();
+
     let gpio = Gpio::new().expect("Failed Gpio::new");
     let keymap = Keymap::new();
-    let pins: Vec<InputPin> = keymap
+    let _pins: Vec<InputPin> = keymap
         .keys()
         .into_iter()
         .map(move |pid| {
             let mut p = gpio.get(*pid).expect("get pin").into_input_pullup();
             let kk = Keymap::new();
             let setting = kk.get_setting(*pid).expect("invalid pin");
-            let name = String::from(&setting.name);
+            let pp = pid.clone();
+            let tt = tx.clone();
             p.set_async_interrupt(setting.trigger, move |lv| {
-                key_event(name.to_string(), lv as i8);
+                tt.send(pp).expect("send tx");
             })
             .expect("invalid set async interrupt");
             p
         })
         .collect();
-    pins
+    loop{
+        rx.try_recv().and_then(|r| {
+            // println!("{:?}",r);
+            key_event(r);
+            Ok(r)
+        }).ok();
+    }
 }
-
-pub fn hook_keyevent<C>(key_event: C)
-where
-    C: FnMut(String, i8) + Send + 'static + Copy,
-{
-    let pins = get_pins(key_event);
-    loop {}
-}
-

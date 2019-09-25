@@ -20,7 +20,7 @@ use sh1106::Error;
 // use std::rc::Rc;
 
 
-mod display;
+pub mod display;
 mod generator;
 use generator::Generator;
 

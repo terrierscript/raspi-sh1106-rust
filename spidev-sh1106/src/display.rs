@@ -1,28 +1,38 @@
 use crate::generator::Generator;
 use crate::SpidevInterface;
+use crate::SpidevSH1106;
 use sh1106::interface::DisplayInterface;
 use sh1106::mode::GraphicsMode;
 use sh1106::prelude::*;
 use sh1106::Builder;
+use hal::Pin;
+use hal::Spidev;
 
 pub struct Display {
-  pub disp: GraphicsMode<SpidevInterface>,
+  device: SpidevSH1106,
+  // pub disp: GraphicsMode<SpidevInterface>,
+  spidev:  Spidev,
+  dc_pin:  Pin
 }
 
 impl Display {
   pub fn new() -> Self {
+    let sh = SpidevSH1106::new();
     let spidev = Generator::setup_spi();
     let dc_pin = Generator::dc_pin();
 
     Display {
-      disp: Self::gen_display(),
+      device: sh,
+      spidev: spidev,
+      dc_pin: dc_pin
+      // disp: Self::gen_display(),
     }
   }
-  fn gen_display() -> GraphicsMode<SpidevInterface> {
+  pub fn gen_display(self) -> GraphicsMode<SpidevInterface> {
     let d: GraphicsMode<_> = Builder::new()
       .with_rotation(DisplayRotation::Rotate180)
       .with_size(DisplaySize::Display128x64)
-      .connect_spi(Generator::setup_spi(), Generator::dc_pin())
+      .connect_spi(self.device.spidev, self.device.dc_pin)
       // .connect_spi(self.spidev, self.dc_pin)
       .into();
     return d;
