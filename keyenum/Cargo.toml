@@ -1,5 +1,5 @@
 [package]
-name = "canvas"
+name = "keyenum"
 version = "0.1.0"
 authors = ["terrierscript <13282103+terrierscript@users.noreply.github.com>"]
 edition = "2018"
@@ -7,5 +7,6 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-embedded-graphics = "0.4.9"
-keyenum = { path = "../keyenum"}
+
+num-traits = "0.2"
+num-derive = "0.2"

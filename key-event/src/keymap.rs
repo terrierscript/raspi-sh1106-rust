@@ -65,7 +65,7 @@ mod test {
         let keymap = Keymap::new();
         for k in keymap.keys().into_iter() {
             let x = || {
-                let key_setting = keymap.get_name(*k);
+                let key_setting = keymap.get_setting(*k);
                 println!("{:?}", key_setting);
             };
             x();
