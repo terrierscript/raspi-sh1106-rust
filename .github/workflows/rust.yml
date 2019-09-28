@@ -10,4 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - run: rustup target add arm-unknown-linux-musleabi
-    - run: cargo check --verbose
+    - run: cargo check 
+    - run: cargo build  
+    - run: cargo test
