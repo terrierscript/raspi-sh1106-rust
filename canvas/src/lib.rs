@@ -53,24 +53,28 @@ impl Canvas {
 
     pub fn move_char(&mut self, event: Event) -> &mut Canvas {
         let c = match event {
-            Up => self.character.immutalbe_move(0, -self.move_pad),
-            Down => self.character.immutalbe_move(0, self.move_pad),
-            Left => self.character.immutalbe_move(-self.move_pad, 0),
-            Right => self.character.immutalbe_move(self.move_pad, 0),
+            Event::Up => self.character.immutalbe_move(0, -self.move_pad),
+            Event::Down => self.character.immutalbe_move(0, self.move_pad),
+            Event::Left => self.character.immutalbe_move(-self.move_pad, 0),
+            Event::Right => self.character.immutalbe_move(self.move_pad, 0),
             _ => self.character.immutalbe_move(0, 0),
         };
         self.character = c;
         self
     }
 
-    pub fn move_char_from_key(&mut self, key: KeyEnum) -> &mut Canvas {
-        let ev = match key {
-            KeyEnum::KeyUpPin =>    Event::Up,
-            KeyEnum::KeyDownPin =>  Event::Down,
-            KeyEnum::KeyLeftPin =>  Event::Left,
+    pub fn key_to_event(&mut self, key: KeyEnum) -> Event {
+        return match key {
+            KeyEnum::KeyUpPin => Event::Up,
+            KeyEnum::KeyDownPin => Event::Down,
+            KeyEnum::KeyLeftPin => Event::Left,
             KeyEnum::KeyRightPin => Event::Right,
-            _ => Event::UnknownEvent
+            _ => Event::UnknownEvent,
         };
+    }
+
+    pub fn move_char_from_key(&mut self, key: KeyEnum) -> &mut Canvas {
+        let ev = self.key_to_event(key);
         self.move_char(ev);
         self
     }
