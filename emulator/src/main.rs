@@ -10,7 +10,7 @@ use sdl2::{
 use std::thread;
 use std::time::Duration;
 
-fn main() {
+fn main() -> Result<(), core::convert::Infallible> {
     let mut display: SimulatorDisplay<BinaryColor> = SimulatorDisplay::new(
         Size::new(128, 64), 
     );
@@ -25,11 +25,11 @@ fn main() {
     // let d2 = canvas.draw_char(display);
     // // d2.flush().expect("fllll");
     'running: loop {
+        display.clear(BinaryColor::Off)?;
         // display.clear(BinaryColor::Off);
         let rect = canvas.char_rect();
-        
-        let d2 = canvas.draw_char(display.clone());
-        window.update(&d2);
+        display.draw_iter(rect.into_iter());
+        window.update(&display);
         for event in window.events() {
             match event {   
                 SimulatorEvent::MouseButtonUp { point, .. } => {
@@ -42,14 +42,14 @@ fn main() {
                     println!("{}", keycode);
                     
                 }
-                SimulatorEvent::Quit => break 'running,
+                SimulatorEvent::Quit => break 'running Ok(()),
                 SimulatorEvent::KeyUp { keycode, keymod, repeat } => {}
                 SimulatorEvent::MouseButtonDown { mouse_btn, point } => {}
                 SimulatorEvent::MouseWheel { scroll_delta, direction } => {}
                 SimulatorEvent::MouseMove { point } => {}
             }
 
-            thread::sleep(Duration::from_millis(200));
+            thread::sleep(Duration::from_millis(50));
          }
     }
 }
