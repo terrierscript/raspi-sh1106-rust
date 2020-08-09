@@ -1,6 +1,7 @@
-use embedded_graphics::pixelcolor::PixelColorU8;
+// use embedded_graphics::pixelcolor::PixelColorU8;
+use embedded_graphics::pixelcolor::PixelColor;
 use embedded_graphics::prelude::*;
-use embedded_graphics::primitives::Rect;
+use embedded_graphics::primitives::Rectangle;
 use keyenum::KeyEnum;
 
 #[derive(Debug)]
@@ -50,16 +51,17 @@ impl Canvas {
     }
     pub fn draw_char<D>(&self, mut drawable: D) -> D
     where
-        D: Drawing<PixelColorU8>,
+        D: Drawing<dyn PixelColor>,
     {
         let c = &self.character;
         let p = 4;
-        let z: Rect<PixelColorU8> = Rect::new(
-            Coord::new(c.x - p, c.y - p),
-            Coord::new(c.x + p, c.y + p),
+        // let f = PrimitiveStyleBuilder::new().fill_color()
+        let z: Rectangle<dyn PixelColor> = Rectangle::new(
+            Point::new(c.x - p, c.y - p),
+            Point::new(c.x + p, c.y + p),
             // 1,
-        )
-        .with_fill(Some(PixelColorU8(1u8)));
+        );
+        // .with_fill(Some(PixelColor(1u8)));
         drawable.draw(z.into_iter());
         drawable
     }
