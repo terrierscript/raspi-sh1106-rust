@@ -4,7 +4,7 @@ use crate::SpidevSH1106;
 // use hal::Pin;
 // use hal::Spidev;
 // use sh1106::interface::DisplayInterface;
-use sh1106::mode::GraphicsMode;
+use sh1106::mode::graphics::GraphicsMode;
 use sh1106::prelude::*;
 use sh1106::Builder;
 
