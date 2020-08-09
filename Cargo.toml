@@ -9,8 +9,6 @@ members = [
   "emulator"
 ]
 
-
-
 [profile.dev]
 panic = "abort"
 

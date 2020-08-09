@@ -1,6 +1,7 @@
-use embedded_graphics::pixelcolor::PixelColorU8;
+// use embedded_graphics::pixelcolor::PixelColorU8;
+use embedded_graphics::{egrectangle,primitive_style};
+use embedded_graphics::pixelcolor::BinaryColor;
 use embedded_graphics::prelude::*;
-use embedded_graphics::primitives::Rect;
 use keyenum::KeyEnum;
 
 #[derive(Debug)]
@@ -50,17 +51,27 @@ impl Canvas {
     }
     pub fn draw_char<D>(&self, mut drawable: D) -> D
     where
-        D: Drawing<PixelColorU8>,
+        D: DrawTarget<BinaryColor>,
     {
         let c = &self.character;
         let p = 4;
-        let z: Rect<PixelColorU8> = Rect::new(
-            Coord::new(c.x - p, c.y - p),
-            Coord::new(c.x + p, c.y + p),
-            // 1,
-        )
-        .with_fill(Some(PixelColorU8(1u8)));
-        drawable.draw(z.into_iter());
+        // let style = PrimitiveStyleBuilder::new().fill_color(Some(BinaryColor::On));
+        // let z = Rectangle::new(
+        //     Point::new(c.x - p, c.y - p),
+        //     Point::new(c.x + p, c.y + p),
+        //     // 1,
+        // ).into_(style);
+        let zz = egrectangle!(
+            top_left = (c.x - p, c.y - p),
+            bottom_right = (c.x + p, c.y + p),
+            // style = primitive_style!(
+            //     fill_color = BinaryColor::On
+            // )
+        );
+        // z.draw(&mut drawable);
+        // ;
+        // .with_fill(Some(PixelColor(1u8)));
+        drawable.draw_iter(zz.into_iter());
         drawable
     }
 }
