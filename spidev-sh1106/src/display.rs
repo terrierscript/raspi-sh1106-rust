@@ -27,15 +27,15 @@ impl Display {
             // dc_pin, // disp: Self::gen_display(),
         }
     }
-    pub fn gen_display(self) -> GraphicsMode<SpidevInterface> {
-        let d: GraphicsMode<_> = Builder::new()
-            .with_rotation(DisplayRotation::Rotate180)
-            .with_size(DisplaySize::Display128x64)
-            .connect_spi(self.device.spidev, self.device.dc_pin)
-            // .connect_spi(self.spidev, self.dc_pin)
-            .into();
-        d
-    }
+    // pub fn gen_display(self) -> GraphicsMode<SpidevInterface> {
+    //     let d: GraphicsMode<_> = Builder::new()
+    //         .with_rotation(DisplayRotation::Rotate180)
+    //         .with_size(DisplaySize::Display128x64)
+    //         .connect_spi(self.device.spidev, self.device.dc_pin)
+    //         // .connect_spi(self.spidev, self.dc_pin)
+    //         .into();
+    //     d
+    // }
 }
 
 // mod test {
