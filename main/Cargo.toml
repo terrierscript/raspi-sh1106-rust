@@ -27,4 +27,5 @@ features = ["graphics"]
 version = "0.2.3"
 
 [dependencies.embedded-graphics]
-version = "0.4.9"
+version = "0.6.2"
+

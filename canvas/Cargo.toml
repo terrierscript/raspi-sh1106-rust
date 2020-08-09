@@ -7,5 +7,5 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-embedded-graphics = "0.4.9"
+embedded-graphics = "0.6.2"
 keyenum = { path = "../keyenum"}
