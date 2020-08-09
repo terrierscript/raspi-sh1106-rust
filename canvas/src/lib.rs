@@ -1,7 +1,8 @@
 // use embedded_graphics::pixelcolor::PixelColorU8;
-use embedded_graphics::{egrectangle,primitive_style};
 use embedded_graphics::pixelcolor::BinaryColor;
 use embedded_graphics::prelude::*;
+use embedded_graphics::primitives::rectangle::Rectangle;
+use embedded_graphics::{egrectangle, primitive_style, style::{Styled, PrimitiveStyle}};
 // use keyenum::KeyEnum;
 // use std::{convert::{TryFrom, Infallible}, fmt::Error};
 
@@ -80,10 +81,7 @@ impl Canvas {
     // }
 
 
-    pub fn draw_char<D>(&self, mut drawable: D) -> D
-    where
-        D: DrawTarget<BinaryColor>,
-    {
+    pub fn char_rect(&self) -> Styled<Rectangle, PrimitiveStyle<BinaryColor>> {
         let c = &self.character;
         let p = 4;
         // let style = PrimitiveStyleBuilder::new().fill_color(Some(BinaryColor::On));
@@ -99,6 +97,40 @@ impl Canvas {
                 fill_color = BinaryColor::On
             )
         );
+        return zz;
+
+        // zz.draw(&mut drawable);
+        // z.draw(&mut drawable);
+        // ;
+        // .with_fill(Some(PixelColor(1u8)));
+        // let r = 
+        // drawable.draw_iter(zz.into_iter());
+
+        // //     .and(Ok(drawable))
+        // // ;
+        // drawable
+    }
+
+    pub fn draw_char<D>(&self, mut drawable: D) -> D
+    where
+        D: DrawTarget<BinaryColor>,
+    {
+        let zz = self.char_rect();
+        // let c = &self.character;
+        // let p = 4;
+        // // let style = PrimitiveStyleBuilder::new().fill_color(Some(BinaryColor::On));
+        // // let z = Rectangle::new(
+        // //     Point::new(c.x - p, c.y - p),
+        // //     Point::new(c.x + p, c.y + p),
+        // //     // 1,
+        // // ).into_(style);
+        // let zz = egrectangle!(
+        //     top_left = (c.x - p, c.y - p),
+        //     bottom_right = (c.x + p, c.y + p),
+        //     style = primitive_style!(
+        //         fill_color = BinaryColor::On
+        //     )
+        // );
 
         // zz.draw(&mut drawable);
         // z.draw(&mut drawable);

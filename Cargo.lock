@@ -209,6 +209,7 @@ dependencies = [
  "canvas",
  "embedded-graphics",
  "embedded-graphics-simulator",
+ "sdl2",
 ]
 
 [[package]]
