@@ -1,15 +1,11 @@
-// use crate::generator::Generator;
-use crate::SpidevInterface;
+// use crate::SpidevInterface;
 use crate::SpidevSH1106;
-// use hal::Pin;
-// use hal::Spidev;
-// use sh1106::interface::DisplayInterface;
-use sh1106::mode::graphics::GraphicsMode;
-use sh1106::prelude::*;
-use sh1106::Builder;
+// use sh1106::mode::graphics::GraphicsMode;
+// use sh1106::prelude::*;
+// use sh1106::Builder;
 
 pub struct Display {
-    device: SpidevSH1106,
+    pub device: SpidevSH1106,
     // pub disp: GraphicsMode<SpidevInterface>,
     // spidev: Spidev,
     // dc_pin: Pin,

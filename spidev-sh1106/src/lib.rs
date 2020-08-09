@@ -16,7 +16,7 @@ use sh1106::{NoOutputPin, Builder};
 pub mod display;
 mod generator;
 use generator::Generator;
-use embedded_hal::digital::v2::OutputPin;
+// use embedded_hal::digital::v2::OutputPin;
 
 // pub type SpidevInterface = SpiInterface<Spidev, Pin, NoOutputPin>;
 pub type SpidevInterface = SpiInterface<Spidev, Pin, NoOutputPin<hal::sysfs_gpio::Error>>;
