@@ -43,10 +43,11 @@ fn main() -> Result<(), core::convert::Infallible> {
                     
                 }
                 SimulatorEvent::Quit => break 'running Ok(()),
-                SimulatorEvent::KeyUp { keycode, keymod, repeat } => {}
-                SimulatorEvent::MouseButtonDown { mouse_btn, point } => {}
-                SimulatorEvent::MouseWheel { scroll_delta, direction } => {}
-                SimulatorEvent::MouseMove { point } => {}
+                _ => {}
+                // SimulatorEvent::KeyUp { keycode, keymod, repeat } => {}
+                // SimulatorEvent::MouseButtonDown { mouse_btn, point } => {}
+                // SimulatorEvent::MouseWheel { scroll_delta, direction } => {}
+                // SimulatorEvent::MouseMove { point } => {}
             }
 
             thread::sleep(Duration::from_millis(50));
