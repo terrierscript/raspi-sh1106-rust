@@ -1,0 +1,1 @@
+cargo run -p emulator --target=x86_64-apple-darwin
