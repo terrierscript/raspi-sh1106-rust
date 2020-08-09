@@ -49,17 +49,7 @@ impl Canvas {
             character: Character { x: 30, y: 30 },
         }
     }
-    pub fn move_char(&mut self, event: Event) -> &mut Canvas {
-        let c = match event {
-            Up => self.character.immutalbe_move(0, -self.move_pad),
-            Down => self.character.immutalbe_move(0, self.move_pad),
-            Left => self.character.immutalbe_move(-self.move_pad, 0),
-            Right => self.character.immutalbe_move(self.move_pad, 0),
-            _ => self.character.immutalbe_move(0, 0),
-        };
-        self.character = c;
-        self
-    }
+
     pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
         let c = match key {
             KeyEnum::KeyUpPin => self.character.immutalbe_move(0, -self.move_pad),

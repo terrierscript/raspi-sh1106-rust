@@ -1,2 +1,2 @@
 [build]
-#target="armv7-unknown-linux-musleabihf"
+target="stable-x86_64-apple-darwin"
