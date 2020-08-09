@@ -12,4 +12,4 @@ keyenum = { path = "../keyenum"}
 
 # spidev-sh1106 = { path = "../spidev-sh1106"}
 # keymap = { path = "../keymap"}
-sh1106 = "0.2.0"
+sh1106 =  "0.3.3"
