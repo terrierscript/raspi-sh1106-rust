@@ -32,6 +32,7 @@ pub struct Canvas {
 }
 
 pub enum Event {
+    UnknownEvent,
     Up,
     Down,
     Left,
@@ -49,6 +50,7 @@ impl Canvas {
             character: Character { x: 30, y: 30 },
         }
     }
+
     pub fn move_char(&mut self, event: Event) -> &mut Canvas {
         let c = match event {
             Up => self.character.immutalbe_move(0, -self.move_pad),
@@ -60,17 +62,29 @@ impl Canvas {
         self.character = c;
         self
     }
-    pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
-        let c = match key {
-            KeyEnum::KeyUpPin => self.character.immutalbe_move(0, -self.move_pad),
-            KeyEnum::KeyDownPin => self.character.immutalbe_move(0, self.move_pad),
-            KeyEnum::KeyLeftPin => self.character.immutalbe_move(-self.move_pad, 0),
-            KeyEnum::KeyRightPin => self.character.immutalbe_move(self.move_pad, 0),
-            _ => self.character.immutalbe_move(0, 0),
+
+    pub fn move_char_from_key(&mut self, key: KeyEnum) -> &mut Canvas {
+        let ev = match key {
+            KeyEnum::KeyUpPin =>    Event::Up,
+            KeyEnum::KeyDownPin =>  Event::Down,
+            KeyEnum::KeyLeftPin =>  Event::Left,
+            KeyEnum::KeyRightPin => Event::Right,
+            _ => Event::UnknownEvent
         };
-        self.character = c;
+        self.move_char(ev);
         self
     }
+    // pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
+    //     let c = match key {
+    //         KeyEnum::KeyUpPin => self.character.immutalbe_move(0, -self.move_pad),
+    //         KeyEnum::KeyDownPin => self.character.immutalbe_move(0, self.move_pad),
+    //         KeyEnum::KeyLeftPin => self.character.immutalbe_move(-self.move_pad, 0),
+    //         KeyEnum::KeyRightPin => self.character.immutalbe_move(self.move_pad, 0),
+    //         _ => self.character.immutalbe_move(0, 0),
+    //     };
+    //     self.character = c;
+    //     self
+    // }
 
     pub fn draw_char<D>(&self, mut drawable: D) -> D
     where
