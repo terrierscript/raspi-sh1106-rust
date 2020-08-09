@@ -9,4 +9,5 @@ edition = "2018"
 [dependencies]
 
 canvas = { path = "../canvas"}
+embedded-graphics = "0.4.9"
 embedded-graphics-simulator = "0.1.0"

@@ -6,6 +6,7 @@ members = [
   "keyenum",
   "random-pos",
   "canvas",
+  "emulator"
 ]
 
 
