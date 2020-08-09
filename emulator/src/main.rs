@@ -25,10 +25,11 @@ fn main() -> Result<(), core::convert::Infallible> {
     // let d2 = canvas.draw_char(display);
     // // d2.flush().expect("fllll");
     'running: loop {
-        display.clear(BinaryColor::Off)?;
+        // display.clear(BinaryColor::Off)?;
         // display.clear(BinaryColor::Off);
         let rect = canvas.char_rect();
-        display.draw_iter(rect.into_iter());
+        canvas.draw_char(&mut display);
+        // display.draw_iter(rect.into_iter());
         window.update(&display);
         for event in window.events() {
             match event {

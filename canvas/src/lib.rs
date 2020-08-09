@@ -111,7 +111,7 @@ impl Canvas {
         // drawable
     }
 
-    pub fn draw_char<D>(&self, mut drawable: D) -> D
+    pub fn draw_char<D>(&self, drawable: &mut D) -> Result<(), D::Error>
     where
         D: DrawTarget<BinaryColor>,
     {
@@ -137,11 +137,11 @@ impl Canvas {
         // ;
         // .with_fill(Some(PixelColor(1u8)));
         // let r = 
-        drawable.draw_iter(zz.into_iter());
+        return drawable.draw_iter(zz.into_iter());
 
         //     .and(Ok(drawable))
         // ;
-        drawable
+        // drawable
     }
 }
 impl Default for Canvas {
