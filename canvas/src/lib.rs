@@ -2,8 +2,8 @@
 use embedded_graphics::{egrectangle,primitive_style};
 use embedded_graphics::pixelcolor::BinaryColor;
 use embedded_graphics::prelude::*;
-use keyenum::KeyEnum;
-use std::{convert::{TryFrom, Infallible}, fmt::Error};
+// use keyenum::KeyEnum;
+// use std::{convert::{TryFrom, Infallible}, fmt::Error};
 
 #[warn(unused_must_use)]
     
@@ -63,32 +63,22 @@ impl Canvas {
         self
     }
 
-    pub fn key_to_event(&mut self, key: KeyEnum) -> Event {
-        return match key {
-            KeyEnum::KeyUpPin => Event::Up,
-            KeyEnum::KeyDownPin => Event::Down,
-            KeyEnum::KeyLeftPin => Event::Left,
-            KeyEnum::KeyRightPin => Event::Right,
-            _ => Event::UnknownEvent,
-        };
-    }
-
-    pub fn move_char_from_key(&mut self, key: KeyEnum) -> &mut Canvas {
-        let ev = self.key_to_event(key);
-        self.move_char(ev);
-        self
-    }
-    // pub fn move_char(&mut self, key: KeyEnum) -> &mut Canvas {
-    //     let c = match key {
-    //         KeyEnum::KeyUpPin => self.character.immutalbe_move(0, -self.move_pad),
-    //         KeyEnum::KeyDownPin => self.character.immutalbe_move(0, self.move_pad),
-    //         KeyEnum::KeyLeftPin => self.character.immutalbe_move(-self.move_pad, 0),
-    //         KeyEnum::KeyRightPin => self.character.immutalbe_move(self.move_pad, 0),
-    //         _ => self.character.immutalbe_move(0, 0),
+    // pub fn key_to_event(&mut self, key: KeyEnum) -> Event {
+    //     return match key {
+    //         KeyEnum::KeyUpPin => Event::Up,
+    //         KeyEnum::KeyDownPin => Event::Down,
+    //         KeyEnum::KeyLeftPin => Event::Left,
+    //         KeyEnum::KeyRightPin => Event::Right,
+    //         _ => Event::UnknownEvent,
     //     };
-    //     self.character = c;
+    // }
+
+    // pub fn move_char_from_key(&mut self, key: KeyEnum) -> &mut Canvas {
+    //     let ev = self.key_to_event(key);
+    //     self.move_char(ev);
     //     self
     // }
+
 
     pub fn draw_char<D>(&self, mut drawable: D) -> D
     where
@@ -115,8 +105,7 @@ impl Canvas {
         // ;
         // .with_fill(Some(PixelColor(1u8)));
         // let r = 
-        drawable
-            .draw_iter(zz.into_iter());
+        drawable.draw_iter(zz.into_iter());
 
         //     .and(Ok(drawable))
         // ;

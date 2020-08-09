@@ -59,7 +59,6 @@ name = "canvas"
 version = "0.1.0"
 dependencies = [
  "embedded-graphics",
- "keyenum",
 ]
 
 [[package]]
