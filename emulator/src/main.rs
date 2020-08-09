@@ -31,23 +31,14 @@ fn main() -> Result<(), core::convert::Infallible> {
         display.draw_iter(rect.into_iter());
         window.update(&display);
         for event in window.events() {
-            match event {   
-                SimulatorEvent::MouseButtonUp { point, .. } => {
-                    println!("Click event at ({}, {})", point.x, point.y);
-                }
+            match event {
                 SimulatorEvent::KeyDown { keycode, ..} => {
                     let ev = key_to_event(keycode);
                     canvas.move_char(ev);
-                    // display.draw_iter(rect.into_iter());
-                    println!("{}", keycode);
-                    
+                    println!("{}", keycode);    
                 }
                 SimulatorEvent::Quit => break 'running Ok(()),
                 _ => {}
-                // SimulatorEvent::KeyUp { keycode, keymod, repeat } => {}
-                // SimulatorEvent::MouseButtonDown { mouse_btn, point } => {}
-                // SimulatorEvent::MouseWheel { scroll_delta, direction } => {}
-                // SimulatorEvent::MouseMove { point } => {}
             }
 
             thread::sleep(Duration::from_millis(50));
