@@ -30,11 +30,12 @@ fn spi2() {
     }
 
     hook_keyevent(move |pin: u8| {
-        let disp: GraphicsMode<SpidevInterface> = SpidevSH1106::gen_display();
+        let mut disp: GraphicsMode<SpidevInterface> = SpidevSH1106::gen_display();
         let keyenum = keyenum::from_u8(pin).expect("invalid pin");
         canvas.move_char(key_to_event(keyenum));
-        let mut d2 = canvas.draw_char(disp);
-        d2.flush().expect("fllll");
+        let mut d2 = canvas.draw_char(&mut disp);
+        
+        disp.flush().expect("fllll");
     });
     println!("hook");
     println!("end");
