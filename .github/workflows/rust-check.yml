@@ -16,13 +16,15 @@ jobs:
       - uses: actions-rs/toolchain@v1.0.6
         with:
           toolchain: stable
-          target: armv7-unknown-linux-gnueabihf
+          # target: armv7-unknown-linux-gnueabihf
+          target: arm-unknown-linux-musleabi
           override: true
       - uses: actions-rs/cargo@v1.0.1
         with:
           use-cross: true
           command: build
-          args: --target arm-unknown-linux-musleabihf -p main --release
+          # args: --target arm7-unknown-linux-musleabihf -p main --release
+          args: --target arm-unknown-linux-musleabi -p main --release
       - uses: actions/upload-artifact@v2
         with:
           name: result
