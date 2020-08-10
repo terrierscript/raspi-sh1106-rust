@@ -6,9 +6,8 @@ members = [
   "keyenum",
   "random-pos",
   "canvas",
+  "emulator"
 ]
-
-
 
 [profile.dev]
 panic = "abort"

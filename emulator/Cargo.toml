@@ -1,5 +1,5 @@
 [package]
-name = "canvas"
+name = "emulator"
 version = "0.1.0"
 authors = ["terrierscript <13282103+terrierscript@users.noreply.github.com>"]
 edition = "2018"
@@ -7,4 +7,11 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+canvas = { path = "../canvas"}
 embedded-graphics = "0.6.2"
+embedded-graphics-simulator = "0.2.1"
+sdl2 = "0.32.2"
+
+[build]
+target="stable-x86_64-apple-darwin"
