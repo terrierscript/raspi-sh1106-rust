@@ -22,4 +22,8 @@ jobs:
         with:
           use-cross: true
           command: build
-          args: --target arm-unknown-linux-musleabihf -p main
+          args: --target arm-unknown-linux-musleabihf -p main --release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: result
+          path: target
