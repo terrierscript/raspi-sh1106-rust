@@ -22,4 +22,4 @@ jobs:
         with:
           use-cross: true
           command: build
-          args: --target arm-unknown-linux-musleabihf
+          args: --target arm-unknown-linux-musleabihf -p main
