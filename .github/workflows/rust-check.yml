@@ -3,21 +3,21 @@ name: Rust
 on: [push]
 
 jobs:
-  # check:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - run: rustup target add arm-unknown-linux-musleabi
-  #     - run: cargo check --target=arm-unknown-linux-musleabi
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain
-        with:
-          # toolchain: stable
-          target: armv7-unknown-linux-gnueabihf
-          override: true
+      - uses: actions/checkout@v1
+      - run: rustup target add arm-unknown-linux-musleabi
+      - run: cargo check --target=arm-unknown-linux-musleabi
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions-rs/toolchain
+  #       with:
+  #         # toolchain: stable
+  #         target: armv7-unknown-linux-gnueabihf
+  #         override: true
       # - uses: actions-rs/cargo@v1
       #   with:
       #     use-cross: true
