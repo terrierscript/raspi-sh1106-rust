@@ -3,12 +3,17 @@ name: Rust
 on: [push]
 
 jobs:
-  build:
+  check:
 
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v1
-    - run: rustup target add arm-unknown-linux-musleabi
-    - run: cargo check --target=arm-unknown-linux-musleabi
-    - run: cargo build --target=arm-unknown-linux-musleabi
+      - uses: actions/checkout@v1
+      - run: rustup target add arm-unknown-linux-musleabi
+      - run: cargo check --target=arm-unknown-linux-musleabi
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+      - run: cargo build --release --all-features
